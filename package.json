@@ -1,0 +1,41 @@
+{
+  "name": "boostify-size-guide",
+  "version": "1.0.0",
+  "description": "A WordPress theme",
+  "main": "index.js",
+  "scripts": {
+    "start": "gulp",
+    "build": "gulp build --prod"
+  },
+  "author": "BoostifyTheme",
+  "devDependencies": {
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/register": "^7.4.4",
+    "autoprefixer": "^9.4.6",
+    "babel-loader": "^8.0.5",
+    "browser-sync": "^2.26.3",
+    "del": "^3.0.0",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.0.0",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-minify": "^3.1.0",
+    "gulp-postcss": "^8.0.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.1",
+    "gulp-wp-pot": "^2.3.3",
+    "gulp-zip": "^4.2.0",
+    "import-glob-loader": "^1.1.0",
+    "node-sass": "^4.11.0",
+    "run-sequence": "^2.2.1",
+    "yargs": "^12.0.5"
+  },
+  "dependencies": {
+    "gulp-babel": "^8.0.0",
+    "gulp-css-globbing": "^0.2.2",
+    "gulp-sequence": "^1.0.0"
+  }
+}
