@@ -6,7 +6,7 @@
  */
 namespace Boostify_Size_Guide;
 /**
- * Class Boostify_Hf_Template_Render
+ * Class boostify_sg_Template_Render
  */
 class Template_Render {
 

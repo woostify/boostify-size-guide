@@ -10,7 +10,7 @@
 			var btn      = $( this );
 			var postType = $( this ).val();
 			var data     = {
-				action: 'boostify_hf_load_autocomplate',//boostify_hf_post_admin
+				action: 'boostify_sg_load_autocomplate',//boostify_sg_post_admin
 				_ajax_nonce: admin.nonce,
 				post_type: postType,
 			};
@@ -21,10 +21,10 @@
 					url: admin.url,
 					data: data,
 					beforeSend: function (response) {
-						$( '#ht_hf_setting' ).addClass( 'loading' );
+						$( '#ht_sg_setting' ).addClass( 'loading' );
 					},
 					success: function (response) {
-						$( '#ht_hf_setting' ).removeClass( 'loading' );
+						$( '#ht_sg_setting' ).removeClass( 'loading' );
 						console.log( response );
 						btn.parents( '.condition-group' ).find( '.child-item' ).html( response );
 					},
@@ -41,7 +41,7 @@
 			var btn      = $( this );
 			var postType = btn.val();
 			var data     = {
-				action: 'boostify_hf_ex_auto',//boostify_hf_post_admin
+				action: 'boostify_sg_ex_auto',//boostify_sg_post_admin
 				_ajax_nonce: admin.nonce,
 				post_type: postType,
 			};
@@ -51,10 +51,10 @@
 					url: admin.url,
 					data: data,
 					beforeSend: function (response) {
-						$( '#ht_hf_setting' ).addClass( 'loading' );
+						$( '#ht_sg_setting' ).addClass( 'loading' );
 					},
 					success: function (response) {
-						$( '#ht_hf_setting' ).removeClass( 'loading' );
+						$( '#ht_sg_setting' ).removeClass( 'loading' );
 						btn.parents( '.condition-group' ).find( '.child-item' ).html( response );
 					},
 				}
@@ -74,7 +74,7 @@
 
 			console.log( postType );
 			var data = {
-				action: 'boostify_hf_post_admin',//boostify_hf_post_admin
+				action: 'boostify_sg_post_admin',//boostify_sg_post_admin
 				_ajax_nonce: admin.nonce,
 				post_type: postType,
 				key: keyword,
@@ -85,10 +85,10 @@
 					url: admin.url,
 					data: data,
 					beforeSend: function (response) {
-						$( '#ht_hf_setting' ).addClass( 'loading' );
+						$( '#ht_sg_setting' ).addClass( 'loading' );
 					},
 					success: function (response) {
-						$( '#ht_hf_setting' ).removeClass( 'loading' );
+						$( '#ht_sg_setting' ).removeClass( 'loading' );
 						parentItem.find( '.boostify-data' ).html( response );
 					},
 				}
@@ -235,7 +235,7 @@
 			var btn  = $( this );
 			var type = $( this ).val();
 			var data = {
-				action: 'boostify_hf_type',//boostify_hf_post_admin
+				action: 'boostify_sg_type',//boostify_sg_post_admin
 				_ajax_nonce: admin.nonce,
 				type: type,
 			};
@@ -251,10 +251,10 @@
 							url: admin.url,
 							data: data,
 							beforeSend: function (response) {
-								$( '#ht_hf_setting' ).addClass( 'loading' );
+								$( '#ht_sg_setting' ).addClass( 'loading' );
 							},
 							success: function (response) {
-								$( '#ht_hf_setting' ).removeClass( 'loading' );
+								$( '#ht_sg_setting' ).removeClass( 'loading' );
 								$('.form-meta-footer').append( response );
 							},
 						}

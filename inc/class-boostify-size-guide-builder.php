@@ -35,8 +35,9 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/helper.php';
 			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/admin/class-admin.php';
 			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/admin/class-metabox.php';
+            include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/class-template.php';
 			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/elementor/class-template-render.php';
-			//include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/elementor/class-elementor.php';
+			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/elementor/class-elementor.php';
 		}
 
 		public function hooks() {
@@ -47,11 +48,8 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 			add_action( 'elementor/editor/wp_head', array( $this, 'enqueue_icon' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'style' ), 99 );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_icon' ), 99 );
-			add_action( 'boostify_hf_seach_form', 'Boostify_Size_Guide_search_form', 10, 3 );
             add_action( 'woocommerce_single_product_summary', 'bosstify_size_guide', 45 );
 			add_action( 'admin_notices', array( $this, 'notice_plugin' ) );
-			add_shortcode( 'btf_year', array( $this, 'get_year' ) );
-			add_shortcode( 'btf_site_tile', array( $this, 'get_site_name' ) );
 			add_action( 'admin_notices', array( $this, 'notice_theme_support' ) );
 		}
 

@@ -22,22 +22,22 @@ class Metabox {
 	public function hooks() {
 		add_action( 'add_meta_boxes', array( $this, 'pagesetting_meta_box' ) );
 		add_action( 'save_post', array( $this, 'pagesetting_save' ) );
-		add_action( 'wp_ajax_boostify_hf_load_autocomplate', array( $this, 'boostify_hf_input' ) );
-		add_action( 'wp_ajax_nopriv_boostify_hf_load_autocomplate', array( $this, 'boostify_hf_input' ) );
-		add_action( 'wp_ajax_boostify_hf_post_admin', array( $this, 'boostify_hf_post_admin' ) );
-		add_action( 'wp_ajax_nopriv_boostify_hf_post_admin', array( $this, 'boostify_hf_post_admin' ) );
+		add_action( 'wp_ajax_boostify_sg_load_autocomplate', array( $this, 'boostify_sg_input' ) );
+		add_action( 'wp_ajax_nopriv_boostify_sg_load_autocomplate', array( $this, 'boostify_sg_input' ) );
+		add_action( 'wp_ajax_boostify_sg_post_admin', array( $this, 'boostify_sg_post_admin' ) );
+		add_action( 'wp_ajax_nopriv_boostify_sg_post_admin', array( $this, 'boostify_sg_post_admin' ) );
 		add_action( 'wp_ajax_bsg_more_rule', array( $this, 'parent_rule' ) );
 		add_action( 'wp_ajax_nopriv_bsg_more_rule', array( $this, 'parent_rule' ) );
-		add_action( 'wp_ajax_boostify_hf_ex_auto', array( $this, 'boostify_hf_post_exclude' ) );
-		add_action( 'wp_ajax_nopriv_boostify_hf_ex_auto', array( $this, 'boostify_hf_post_exclude' ) );
-		add_action( 'wp_ajax_boostify_hf_type', array( $this, 'display_setting' ) );
-		add_action( 'wp_ajax_nopriv_boostify_hf_type', array( $this, 'display_setting' ) );
+		add_action( 'wp_ajax_boostify_sg_ex_auto', array( $this, 'boostify_sg_post_exclude' ) );
+		add_action( 'wp_ajax_nopriv_boostify_sg_ex_auto', array( $this, 'boostify_sg_post_exclude' ) );
+		add_action( 'wp_ajax_boostify_sg_type', array( $this, 'display_setting' ) );
+		add_action( 'wp_ajax_nopriv_boostify_sg_type', array( $this, 'display_setting' ) );
 	}
 
 	// Type Builder
 	public function type_builder() {
 		$type = array(
-			'size_guide' => __( 'Size Guide', 'boostify' ),
+            'size_guide' => __( 'Size Guide', 'boostify' )
 		);
 
 		return $type;
@@ -45,19 +45,19 @@ class Metabox {
 
 	// Meta Box In btf_builder post type
 	public function pagesetting_meta_box() {
-		add_meta_box( 'ht_hf_setting', 'Template Settings', array( $this, 'ht_hfsetting_output' ), 'btf_builder', 'side', 'high' );
+		add_meta_box( 'ht_sg_setting', 'Template Settings', array( $this, 'ht_sgsetting_output' ), 'btf_builder', 'side', 'high' );
 	}
 
 
 	// Screen meta box in btf_builder post type
-	public function ht_hfsetting_output( $post ) {
+	public function ht_sgsetting_output( $post ) {
 		$types         = $this->type_builder();
 		$type          = get_post_meta( $post->ID, 'bsg_type', true );
 		$display       = get_post_meta( $post->ID, 'bsg_display', true );
 		$posts         = get_post_meta( $post->ID, 'bsg_post', true );
 		$post_type     = get_post_meta( $post->ID, 'bsg_post_type', true );
 
-		wp_nonce_field( 'boostify_hf_action', 'boostify_hf' );
+		wp_nonce_field( 'boostify_sg_action', 'boostify_sg' );
 		?>
 
 		<div class="form-meta-footer">
@@ -73,7 +73,7 @@ class Metabox {
             </div>
             <?php
             if ( 'size_guide' !== $type ) {
-                $this->hf_display( $post );
+                $this->sg_display( $post );
             }
             ?>
 		</div>
@@ -82,8 +82,8 @@ class Metabox {
 
 	// Save meta box setting in btf_buider postType
 	public function pagesetting_save( $post_id ) {
-		$nonce_name   = ( array_key_exists( 'boostify_hf', $_POST ) ) ? sanitize_text_field( $_POST['boostify_hf'] ) : '';
-		$nonce_action = 'boostify_hf_action';
+		$nonce_name   = ( array_key_exists( 'boostify_sg', $_POST ) ) ? sanitize_text_field( $_POST['boostify_sg'] ) : '';
+		$nonce_action = 'boostify_sg_action';
 
 		if ( ! isset( $nonce_name ) ) {
 			return;
@@ -184,7 +184,7 @@ class Metabox {
 
 	}
 
-	public function hf_display( $post ) {
+	public function sg_display( $post ) {
 		$options      = $this->pt_support();
 		$display      = get_post_meta( $post->ID, 'bsg_display', true );
 		$no_display   = get_post_meta( $post->ID, 'bsg_no_display', true );
@@ -327,7 +327,7 @@ class Metabox {
 		<?php
 	}
 
-	public function boostify_hf_post_admin() {
+	public function boostify_sg_post_admin() {
 		check_ajax_referer( 'ht_hf_nonce' );
 		$post_type = sanitize_text_field( $_GET['post_type'] );
 		$keyword   = sanitize_text_field( $_GET['key'] );
@@ -390,7 +390,7 @@ class Metabox {
 
 
 	// For Ajax For Select single post display
-	public function boostify_hf_input() {
+	public function boostify_sg_input() {
 		check_ajax_referer( 'ht_hf_nonce' );
 		$post_type = sanitize_text_field( $_POST['post_type'] );
 
@@ -418,7 +418,7 @@ class Metabox {
 	}
 
 	// For Ajax For Select single post not display
-	public function boostify_hf_post_exclude() {
+	public function boostify_sg_post_exclude() {
 		check_ajax_referer( 'ht_hf_nonce' );
 		$post_type = sanitize_text_field( $_POST['post_type'] );
 
