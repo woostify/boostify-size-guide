@@ -122,15 +122,6 @@ class Elementor_Sg {
 		}
 	}
 
-	public function init() {
-
-		$this->modules_manager = \Boostify_Size_Guide\Module\Sticky::instance();
-
-		$elementor = \Elementor\Plugin::$instance;
-
-		do_action( 'elementor_controls/init' ); // phpcs:ignore
-	}
-
 	private function setup_hooks() {
 		// Register Module.
 		add_action( 'elementor/init', array( $this, 'init' ) );

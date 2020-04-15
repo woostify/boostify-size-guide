@@ -11,6 +11,7 @@ function boostify_size_guide_suffix() {
 	return $suffix;
 }
 
+
 function bosstify_size_guide() {
     $args = array(
         'post_type'      => 'btfsg_builder',
@@ -18,11 +19,29 @@ function bosstify_size_guide() {
         'post_status'    => 'publish',
     );
     $query = new \WP_Query( $args );
+    
     ?>
     <div class="popup">
-        <a href="#" class="btn-size-guide">
-            <?php echo esc_html( 'Size Guide', 'miini' ); ?>
-        </a>
+        <?php
+        global $product;
+        $id = $product->get_id();
+
+        while ( $query->have_posts() ) {
+            $query->the_post();
+            $none_id = get_post_meta( get_the_ID(), 'bsg_ex_post', true );
+            $a = explode( ',' , $none_id );
+
+            foreach ($a as $value) {
+                if ( $value != $id ) {
+                ?>
+                <a href="#" class="btn-size-guide">
+                    <?php echo esc_html( 'Size Guide', 'miini' ); ?>
+                </a>
+                <?php
+                }
+            }
+        }
+        ?>
 
         <div class="cd-popup">
             <div class="cd-popup-container">
