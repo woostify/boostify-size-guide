@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Header Footer Elementor
+ * Class Size Guide Elementor
  *
  * Main Plugin class
  * @since 1.2.0
@@ -8,7 +8,7 @@
 
 namespace Boostify_Size_Guide;
 
-class Elementor {
+class Elementor_Sg {
 	/**
 	 * Instance
 	 *
@@ -148,5 +148,5 @@ class Elementor {
 	}
 }
 // Instantiate Boostify_Size_Guide\Elementor Class
-Elementor::instance();
+Elementor_Sg::instance();
 

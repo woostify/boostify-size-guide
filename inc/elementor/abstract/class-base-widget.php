@@ -18,6 +18,6 @@ abstract class Base_Widget extends Widget_Base {
 	 * @return array Widget categories.
 	 */
 	public function get_categories() {
-		return array( 'ht_hf_builder' );
+		return array( 'ht_sg_builder' );
 	}
 }

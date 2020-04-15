@@ -45,7 +45,7 @@ class Metabox {
 
 	// Meta Box In btf_builder post type
 	public function pagesetting_meta_box() {
-		add_meta_box( 'ht_sg_setting', 'Template Settings', array( $this, 'ht_sgsetting_output' ), 'btf_builder', 'side', 'high' );
+		add_meta_box( 'ht_sg_setting', 'Template Settings', array( $this, 'ht_sgsetting_output' ), 'btfsg_builder', 'side', 'high' );
 	}
 
 
@@ -459,7 +459,7 @@ class Metabox {
 			'user_request'        => 'user_request',
 			'wp_block'            => 'wp_block',
 			'elementor_library'   => 'elementor_library',
-			'btf_builder'         => 'btf_builder',
+			'btfsg_builder'       => 'btfsg_builder',
 			'elementor-hf'        => 'elementor-hf',
 			'elementor_font'      => 'elementor_font',
 			'elementor_icons'     => 'elementor_icons',

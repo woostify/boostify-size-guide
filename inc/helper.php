@@ -13,7 +13,7 @@ function boostify_size_guide_suffix() {
 
 function bosstify_size_guide() {
     $args = array(
-        'post_type'      => 'btf_builder',
+        'post_type'      => 'btfsg_builder',
         'posts_per_page' => 1,
         'post_status'    => 'publish',
     );

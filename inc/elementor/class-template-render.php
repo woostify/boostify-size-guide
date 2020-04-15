@@ -8,7 +8,7 @@ namespace Boostify_Size_Guide;
 /**
  * Class boostify_sg_Template_Render
  */
-class Template_Render {
+class Template_Sg_Render {
 
 	/**
 	 * Current theme template
@@ -114,7 +114,7 @@ class Template_Render {
 	 */
 	protected function builder_template() {
 		$args = array(
-			'post_type'           => 'btf_builder',
+			'post_type'           => 'btfsg_builder',
 			'posts_per_page'      => -1,
 			'ignore_sticky_posts' => 1,
 		);

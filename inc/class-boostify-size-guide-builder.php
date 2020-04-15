@@ -35,7 +35,6 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/helper.php';
 			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/admin/class-admin.php';
 			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/admin/class-metabox.php';
-            include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/class-template.php';
 			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/elementor/class-template-render.php';
 			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/elementor/class-elementor.php';
 		}
@@ -54,7 +53,7 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 		}
 
 		public function cpt() {
-			add_post_type_support( 'btf_builder', 'elementor' );
+			add_post_type_support( 'btfsg_builder', 'elementor' );
 		}
 
 		public function body_ver( $classes ) {
@@ -65,11 +64,11 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 
 		public function post_types() {
 			register_post_type(
-				'btf_builder',
+				'btfsg_builder',
 				array(
 					'supports'     => array( 'title', 'page-attributes' ),
 					'hierarchical' => true,
-					'rewrite'      => array( 'slug' => 'btf_builder' ),
+					'rewrite'      => array( 'slug' => 'btfsg_builder' ),
 					'has_archive'  => false,
 					'public'       => true,
 					'labels'       => array(
@@ -86,7 +85,7 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 
 		public function init() {
 			new Boostify_Size_Guide\Metabox();
-			new Boostify_Size_Guide\Template_Render();			
+			new Boostify_Size_Guide\Template_Sg_Render();			
 		}
 
 		public function test($value='') {
