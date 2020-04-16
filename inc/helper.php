@@ -28,12 +28,20 @@ function bosstify_size_guide() {
 
         while ( $query->have_posts() ) {
             $query->the_post();
-            $none_id = get_post_meta( get_the_ID(), 'bsg_ex_post', true );
-            $a = explode( ',' , $none_id );
+            $display_id = get_post_meta( get_the_ID(), 'bsg_post', true );
+            $a = explode( ',' , $display_id );
 
             foreach ($a as $value) {
                 switch ($value) {
                     case $id:
+                        ?>
+                        <a href="#" class="btn-size-guide">
+                            <?php echo esc_html( 'Size Guide', 'miini' ); ?>
+                        </a>
+                        <?php
+                        break;
+
+                    case 'all':
                         ?>
                         <a href="#" class="btn-size-guide">
                             <?php echo esc_html( 'Size Guide', 'miini' ); ?>

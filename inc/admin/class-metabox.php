@@ -105,118 +105,143 @@ class Metabox {
 			$type
 		);
 
-		if ( 'size_guide' !== $types ) {
+        if ( 'size_guide' !== $type ) {
 
-			// Do Not Display On
-			$no_display = sanitize_text_field( $_POST['bsg_no_display'] );
+            // Display On
+            $display = sanitize_text_field( $_POST['bsg_display'] );
 
-			update_post_meta(
-				$post_id,
-				'bsg_no_display',
-				$no_display
-			);
+            update_post_meta(
+                $post_id,
+                'bsg_display',
+                $display
+            );
 
-			// Ex Post
-			if ( array_key_exists( 'bsg_ex_post', $_POST ) ) {
-				$ex_post = sanitize_text_field( $_POST['bsg_ex_post'] );
+            // Do Not Display On
+            $no_display = sanitize_text_field( $_POST['bsg_no_display'] );
 
-				update_post_meta(
-					$post_id,
-					'bsg_ex_post',
-					$ex_post
-				);
-			}
+            update_post_meta(
+                $post_id,
+                'bsg_no_display',
+                $no_display
+            );
 
-			// Ex Post Type
-			if ( array_key_exists( 'bsg_ex_post_type', $_POST ) ) {
-				$ex_post_type = sanitize_text_field( $_POST['bsg_ex_post_type'] );
+            // Post
+            if ( array_key_exists( 'bsg_post', $_POST ) ) {
+                $post = sanitize_text_field( $_POST['bsg_post'] );
 
-				update_post_meta(
-					$post_id,
-					'bsg_ex_post_type',
-					$ex_post_type
-				);
-			}
-		}
+                update_post_meta(
+                    $post_id,
+                    'bsg_post',
+                    $post
+                );
+            }
+
+            // Ex Post
+            if ( array_key_exists( 'bsg_ex_post', $_POST ) ) {
+                $ex_post = sanitize_text_field( $_POST['bsg_ex_post'] );
+
+                update_post_meta(
+                    $post_id,
+                    'bsg_ex_post',
+                    $ex_post
+                );
+            }
+
+            // Ex Post Type
+            if ( array_key_exists( 'bsg_ex_post_type', $_POST ) ) {
+                $ex_post_type = sanitize_text_field( $_POST['bsg_ex_post_type'] );
+
+                update_post_meta(
+                    $post_id,
+                    'bsg_ex_post_type',
+                    $ex_post_type
+                );
+            }
+
+            // Post Type
+            if ( array_key_exists( 'bsg_post_type', $_POST ) ) {
+                $post_type = sanitize_text_field( $_POST['bsg_post_type'] );
+
+                update_post_meta(
+                    $post_id,
+                    'bsg_post_type',
+                    $post_type
+                );
+            }
+        }
 	}
 
 	public function sg_display( $post ) {
-		$options      = $this->pt_support();
-		$no_display   = get_post_meta( $post->ID, 'bsg_no_display', true );
-		$post_id      = get_post_meta( $post->ID, 'bsg_post', true );
-		$post_type    = get_post_meta( $post->ID, 'bsg_post_type', true );
-		$ex_post_id   = get_post_meta( $post->ID, 'bsg_ex_post', true );
-		$ex_post_type = get_post_meta( $post->ID, 'bsg_ex_post_type', true );
-		$list_ex_post = $ex_post_id;
+        $options      = $this->pt_support();
+        $display      = get_post_meta( $post->ID, 'bsg_display', true );
+        $post_id      = get_post_meta( $post->ID, 'bsg_post', true );
+        $post_type    = get_post_meta( $post->ID, 'bsg_post_type', true );
+        $list_post    = $post_id;
+        if ( 'all' !== $post_id ) {
+            $list_post = explode( ',', $post_id );
+        }
 
-		if ( 'all' !== $ex_post_id ) {
-			$list_ex_post = explode( ',', $ex_post_id );
-		}
-
+        var_dump( $list_post );
 		?>
 			<div class="input-wrapper">
-				<div class="condition-group not-display">
-					<div class="parent-item">
-						<label><?php echo esc_html__( 'Display On', 'boostify' ); ?></label>
-						<select name="bsg_display" class="display-on">
-							<?php
-							unset( $options['all'] );
-							?>
-							<option value="0"><?php echo esc_html__( 'Select', 'boostify' ); ?></option>
-							<?php
-							foreach ( $options as $key => $option ) :
-								$selected = ( $key == $no_display ) ? 'selected' : ''; // phpcs:ignore
-								?>
-								<option value="<?php echo esc_attr( $key ); ?>" <?php echo esc_attr( $selected ); ?>><?php echo esc_html( $option ); ?></option>
-							<?php endforeach ?>
-						</select>
-					</div>
+                <div class="condition-group display--on">
+                    <div class="parent-item">
+                        <label><?php echo esc_html__( 'Display On', 'boostify' ); ?></label>
+                        <select name="bhf_display" class="display-on">
+                            <?php
+                            foreach ( $options as $key => $option ) :
+                                $selected = ( $key == $display ) ? 'selected' : ''; // phpcs:ignore
+                                ?>
+                                <option value="<?php echo esc_attr( $key ); ?>" <?php echo esc_attr( $selected ); ?>><?php echo esc_html( $option ); ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
 
-					<div class="child-item">
-						<div class="input-item-wrapper">
-							<?php
-							if ( ! empty( $ex_post_id ) && ! empty( $ex_post_type ) ) :
+                    <div class="child-item">
+                        <div class="input-item-wrapper">
+                            <?php
+                            if ( ! empty( $post_id ) && ! empty( $post_type ) ) :
 
-								?>
-							<div class="boostify-section-select-post <?php echo ( is_string( $list_ex_post ) ? 'select-all' : 'render--post has-option' ); ?>">
+                                ?>
+                            <div class="boostify-section-select-post <?php echo ( is_string( $list_post ) ? 'select-all' : 'render--post has-option' ); ?>">
 
-								<span class="boostify-select-all-post<?php echo ( is_string( $list_ex_post ) ? '' : ' hidden' ); ?>">
-									<span class="boostify-select-all"><?php echo esc_html__( 'All', 'boostify' ); ?></span>
-									<span class="boostify-arrow ion-chevron-down"></span>
-								</span>
+                                <span class="boostify-select-all-post<?php echo ( is_string( $list_post ) ? '' : ' hidden' ); ?>">
+                                    <span class="boostify-select-all"><?php echo esc_html__( 'All', 'boostify' ); ?></span>
+                                    <span class="boostify-arrow ion-chevron-down"></span>
+                                </span>
 
-								<div class="boostify-section-render--post <?php echo ( is_string( $list_ex_post ) ? 'hidden' : '' ); ?>">
-									<div class="boostify-auto-complete-field">
-										<?php
-										if ( is_array( $list_ex_post ) ) :
+                                <div class="boostify-section-render--post <?php echo ( is_string( $list_post ) ? 'hidden' : '' ); ?>">
+                                    <div class="boostify-auto-complete-field">
+                                        <?php
+                                        if ( is_array( $list_post ) ) :
 
-											foreach ( $list_ex_post as $id ) :
-												$id = (int) $id;
-												?>
+                                            foreach ( $list_post as $id ) :
+                                                $id = (int) $id;
+                                                ?>
 
-												<span class="boostify-auto-complete-key">
-													<span class="boostify-title"><?php echo esc_html( get_the_title( $id ) ); ?></span>
-													<span class="btn-boostify-auto-complete-delete ion-close" data-item="<?php echo esc_attr( $id ); ?>"></span>
-												</span>
-												<?php
-											endforeach;
-										endif;
-										?>
-										<input type="text" class="boostify--hf-post-name" aria-autocomplete="list" size="1">
-									</div>
-								</div>
+                                                <span class="boostify-auto-complete-key">
+                                                    <span class="boostify-title"><?php echo esc_html( get_the_title( $id ) ); ?></span>
+                                                    <span class="btn-boostify-auto-complete-delete ion-close" data-item="<?php echo esc_attr( $id ); ?>"></span>
+                                                </span>
+                                                <?php
+                                            endforeach;
+                                        endif;
+                                        ?>
+                                        <input type="text" class="boostify--hf-post-name" aria-autocomplete="list" size="1">
+                                    </div>
+                                </div>
 
-							</div>
-							<input type="hidden" name="bsg_ex_post_type" value="<?php echo esc_attr( $ex_post_type ); ?>" class="bsg-post-type">
-							<input type="hidden" name="bsg_ex_post" value="<?php echo esc_html( $ex_post_id ); ?>">
-							<div class="boostify-data"></div>
-								<?php
-							endif;
-							?>
-						</div>
-					</div>
-				</div>
-			</div>
+                            </div>
+                            <input type="hidden" name="bhf_post" value="<?php echo esc_html( $post_id ); ?>">
+                            <input type="hidden" name="bhf_post_type" value="<?php echo esc_attr( $post_type ); ?>" class="bhf-post-type">
+                            <div class="boostify-data"></div>
+                                <?php
+                            endif;
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
 		<?php
 	}
 
