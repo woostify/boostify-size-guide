@@ -61,12 +61,6 @@ class Metabox {
 		<div class="form-meta-footer">
             <?php
             if ( 'size_guide' !== $type ) {
-                // $post o dau vay? cai nay t viet theo cai cua phuong
-                // gio lay ra duoc id post cua nhung bai ko muon hien thi
-                // t so sanh neu id ma bang voi list kia thi ko hien thi cai nut size guide
-                // cai quan trong la ong dang lay $post o dau
-                // post no lay bang ajax,
-                // cai nay ko phai lay ra tu ajax
                 $this->sg_display( $post );
             }
             ?>
@@ -163,8 +157,8 @@ class Metabox {
 			<div class="input-wrapper">
 				<div class="condition-group not-display">
 					<div class="parent-item">
-						<label><?php echo esc_html__( 'Do Not Display On', 'boostify' ); ?></label>
-						<select name="bsg_no_display" class="no-display-on">
+						<label><?php echo esc_html__( 'Display On', 'boostify' ); ?></label>
+						<select name="bsg_display" class="display-on">
 							<?php
 							unset( $options['all'] );
 							?>

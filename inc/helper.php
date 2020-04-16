@@ -32,12 +32,18 @@ function bosstify_size_guide() {
             $a = explode( ',' , $none_id );
 
             foreach ($a as $value) {
-                if ( $value != $id ) {
-                ?>
-                <a href="#" class="btn-size-guide">
-                    <?php echo esc_html( 'Size Guide', 'miini' ); ?>
-                </a>
-                <?php
+                switch ($value) {
+                    case $id:
+                        ?>
+                        <a href="#" class="btn-size-guide">
+                            <?php echo esc_html( 'Size Guide', 'miini' ); ?>
+                        </a>
+                        <?php
+                        break;
+                    
+                    default:
+                        echo '';
+                        break;
                 }
             }
         }

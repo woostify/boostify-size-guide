@@ -47,9 +47,9 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 			add_action( 'elementor/editor/wp_head', array( $this, 'enqueue_icon' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'style' ), 99 );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_icon' ), 99 );
-            add_action( 'woocommerce_single_product_summary', 'bosstify_size_guide', 45 );
 			add_action( 'admin_notices', array( $this, 'notice_plugin' ) );
 			add_action( 'admin_notices', array( $this, 'notice_theme_support' ) );
+            add_action( 'woocommerce_single_product_summary', 'bosstify_size_guide', 45 );
 		}
 
 		public function cpt() {
