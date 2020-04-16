@@ -28,6 +28,8 @@ class Metabox {
 		add_action( 'wp_ajax_nopriv_boostify_sg_post_admin', array( $this, 'boostify_sg_post_admin' ) );
 		add_action( 'wp_ajax_bsg_more_rule', array( $this, 'parent_rule' ) );
 		add_action( 'wp_ajax_nopriv_bsg_more_rule', array( $this, 'parent_rule' ) );
+        // Ajax select data.
+        add_action( 'wp_ajax_boostify_size_guide_select_categories', array( $this, 'boostify_sg_select_categories' ) );
 	}
 
 	// Type Builder
@@ -178,6 +180,8 @@ class Metabox {
         if ( 'all' !== $post_id ) {
             $list_post = explode( ',', $post_id );
         }
+
+        var_dump( $list_post );
 		?>
 			<div class="input-wrapper">
                 <div class="condition-group display--on">
@@ -240,6 +244,45 @@ class Metabox {
             </div>
 		<?php
 	}
+
+    /**
+     * Select categories
+     */
+    public function boostify_sg_select_categories() {
+        check_ajax_referer( 'ht_hf_nonce' );
+        $value = isset( $_POST['keyword'] ) ? sanitize_text_field( wp_unslash( $_POST['keyword'] ) ) : '';
+
+        ob_start();
+
+        $args = array(
+            'hide_empty' => true,
+            'search'     => $value,
+        );
+        $cats = get_terms( 'product_cat', $args );
+
+        if ( ! empty( $cats ) && ! is_wp_error( $cats ) ) {
+            ?>
+                <span class="woostify-multi-select-id" data-id="all">
+                    <?php esc_html_e( 'All Categoties', 'boostify' ); ?>
+                </span>
+            <?php
+            foreach ( $cats as $k ) {
+                ?>
+                <span class="woostify-multi-select-id" data-id="<?php echo esc_attr( $k->term_id ); ?>">
+                    <?php echo esc_html( $k->name ); ?>
+                </span>
+                <?php
+            }
+        } else {
+            ?>
+            <span class="no-posts-found"><?php esc_html_e( 'No product category found', 'boostify' ); ?></span>
+            <?php
+        }
+
+        $res = ob_get_clean();
+
+        wp_send_json_success( $res );
+    }
 
 	public function boostify_sg_post_admin() {
 		check_ajax_referer( 'ht_hf_nonce' );
