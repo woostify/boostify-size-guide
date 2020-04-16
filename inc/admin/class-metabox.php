@@ -28,8 +28,6 @@ class Metabox {
 		add_action( 'wp_ajax_nopriv_boostify_sg_post_admin', array( $this, 'boostify_sg_post_admin' ) );
 		add_action( 'wp_ajax_bsg_more_rule', array( $this, 'parent_rule' ) );
 		add_action( 'wp_ajax_nopriv_bsg_more_rule', array( $this, 'parent_rule' ) );
-		add_action( 'wp_ajax_boostify_sg_ex_auto', array( $this, 'boostify_sg_post_exclude' ) );
-		add_action( 'wp_ajax_nopriv_boostify_sg_ex_auto', array( $this, 'boostify_sg_post_exclude' ) );
 	}
 
 	// Type Builder
@@ -43,7 +41,7 @@ class Metabox {
 
 	// Meta Box In btf_builder post type
 	public function pagesetting_meta_box() {
-		add_meta_box( 'ht_sg_setting', 'Template Settings', array( $this, 'ht_sgsetting_output' ), 'btfsg_builder', 'side', 'high' );
+		add_meta_box( 'ht_sg_setting', 'Size Guide Settings', array( $this, 'ht_sgsetting_output' ), 'btfsg_builder', 'side', 'high' );
 	}
 
 
@@ -180,8 +178,6 @@ class Metabox {
         if ( 'all' !== $post_id ) {
             $list_post = explode( ',', $post_id );
         }
-
-        var_dump( $list_post );
 		?>
 			<div class="input-wrapper">
                 <div class="condition-group display--on">
