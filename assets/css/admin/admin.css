@@ -39,21 +39,21 @@
   border: none;
 }
 
-.ht-hf-setting-page {
+.ht-sg-setting-page {
   background-color: #fff;
   padding: 25px;
   margin: 15px;
 }
 
-.ht-hf-setting-page .header {
+.ht-sg-setting-page .header {
   margin-bottom: 30px;
 }
 
-.ht-hf-setting-page .form-setting select {
+.ht-sg-setting-page .form-setting select {
   min-width: 200px;
 }
 
-.ht-hf-setting-page .form-setting label {
+.ht-sg-setting-page .form-setting label {
   min-width: 120px;
   display: inline-block;
   text-align: left;
@@ -153,13 +153,13 @@
   line-height: normal;
 }
 
-.boostify-auto-complete-field .boostify--hf-post-name {
+.boostify-auto-complete-field .boostify--sg-post-name {
   border: none;
   width: auto;
   display: inline-block;
 }
 
-.boostify-auto-complete-field .boostify--hf-post-name:focus {
+.boostify-auto-complete-field .boostify--sg-post-name:focus {
   outline: none;
   border: none;
   box-shadow: none;
@@ -187,7 +187,7 @@
   color: #fff;
 }
 
-.input-item-wrapper .boostify-data .boostify-hf-list-post {
+.input-item-wrapper .boostify-data .boostify-sg-list-post {
   max-height: 240px;
   max-width: 250px;
 }

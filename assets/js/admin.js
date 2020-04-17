@@ -65,7 +65,7 @@
 	// Load post display
 	$( 'body' ).on(
 		'keyup',
-		'.boostify--hf-post-name',
+		'.boostify--sg-post-name',
 		function () {
 			var btn        = $( this );
 			var parentItem = btn.parents( '.input-item-wrapper' );
@@ -124,10 +124,10 @@
 								'<span class="boostify-title">' + title + '</span>' +
 								'<span class="btn-boostify-auto-complete-delete ion-close" data-item="' + id + '"></span>'
 							'</span>';
-				$( '.boostify--hf-post-name' ).before( html );
+				$( '.boostify--sg-post-name' ).before( html );
 			}
 			$( 'input[name=bsg_post]' ).val( listPost );
-			$( '.boostify--hf-post-name' ).val( '' );// Reset Input
+			$( '.boostify--sg-post-name' ).val( '' );// Reset Input
 			$( '.boostify-data' ).html( '' );
 		}
 	);
@@ -160,10 +160,10 @@
 								'<span class="boostify-title">' + title + '</span>' +
 								'<span class="btn-boostify-auto-complete-delete ion-close" data-item="' + id + '"></span>'
 							'</span>';
-				$( '.boostify--hf-post-name' ).before( html );
+				$( '.boostify--sg-post-name' ).before( html );
 			}
 			$( 'input[name=bsg_ex_post]' ).val( listPost );
-			$( '.boostify--hf-post-name' ).val( '' );// Reset Input
+			$( '.boostify--sg-post-name' ).val( '' );// Reset Input
 			$( '.boostify-data' ).html( '' );
 		}
 	);
@@ -174,7 +174,7 @@
 		'.boostify-auto-complete-field',
 		function(e) {
 			var btn  = $( this );
-			var form = btn.find( '.boostify--hf-post-name' );
+			var form = btn.find( '.boostify--sg-post-name' );
 			$( form , this ).focus();
 		}
 	);
@@ -224,7 +224,7 @@
 		'click',
 		function( e ) {
 			$( '.boostify-data' ).html( '' );
-			$( '.boostify--hf-post-name' ).val( '' );// Reset data
+			$( '.boostify--sg-post-name' ).val( '' );// Reset data
 		}
 	);
 

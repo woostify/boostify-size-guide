@@ -8,7 +8,7 @@
 
 namespace Boostify_Size_Guide;
 
-class Elementor_Sg {
+class Elementor {
 	/**
 	 * Instance
 	 *
@@ -44,7 +44,7 @@ class Elementor_Sg {
 	 */
 	public function add_elementor_widget_categories( $elements_manager ) {
 		$elements_manager->add_category(
-			'ht_hf_builder',
+			'ht_bfsg_builder',
 			array(
 				'title' => esc_html__( 'Boostify Size Guide', 'boostify' ),
 			)
@@ -75,7 +75,7 @@ class Elementor_Sg {
 	public function widget_scripts() {
         // Size Guide
         wp_register_script(
-            'boostify-hf-size-guide',
+            'boostify-sg-size-guide',
             BOOSTIFY_SIZE_GUIDE_URL . 'assets/js/size-guide' . boostify_size_guide_suffix() . '.js',
             array( 'jquery' ),
             BOOSTIFY_SIZE_GUIDE_VER,
@@ -103,6 +103,35 @@ class Elementor_Sg {
 		}
 	}
 
+    /**
+     * Add icon for elementor.
+     */
+    public function modify_controls( $controls_registry ) {
+        // Get existing icons
+        $icons = $controls_registry->get_control( 'icon' )->get_settings( 'options' );
+        // Append new icons
+        $new_icons = array_merge(
+            array(
+                'ion-android-arrow-dropdown'  => 'Ion Dropdown',
+                'ion-android-arrow-dropright' => 'Ion Dropright',
+                'ion-android-arrow-forward'   => 'Ion Forward',
+                'ion-chevron-right'           => 'Ion Right',
+                'ion-chevron-down'            => 'Ion Downr',
+                'ion-ios-arrow-down'          => 'Ion Ios Down',
+                'ion-ios-arrow-forward'       => 'Ion Ios Forward',
+                'ion-ios-arrow-thin-right'    => 'Thin Right',
+                'ion-navicon'                 => 'Ion Navicon',
+                'ion-navicon-round'           => 'Navicon Round',
+                'ion-android-menu'            => 'Menu',
+                'ion-ios-search'              => 'Search',
+                'ion-ios-search-strong'       => 'Search Strong',
+            ),
+            $icons
+        );
+        // Then we set a new list of icons as the options of the icon control
+        $controls_registry->get_control( 'icon' )->set_settings( 'options', $new_icons );
+    }
+
 	/**
 	 * Register Widgets
 	 *
@@ -124,7 +153,6 @@ class Elementor_Sg {
 
 	private function setup_hooks() {
 		// Register Module.
-		add_action( 'elementor/init', array( $this, 'init' ) );
 		add_action( 'elementor/init', array( $this, 'register_abstract' ) );
 		// Register custom widget categories.
 		add_action( 'elementor/elements/categories_registered', array( $this, 'add_elementor_widget_categories' ) );
@@ -132,12 +160,25 @@ class Elementor_Sg {
 		add_action( 'elementor/frontend/after_register_scripts', array( $this, 'widget_scripts' ) );
 		// Register widgets
 		add_action( 'elementor/widgets/widgets_registered', array( $this, 'init_widgets' ) );
+        add_action( 'elementor/controls/controls_registered', array( $this, 'modify_controls' ), 10, 1 );
 	}
 
 	public function register_abstract() {
 		require BOOSTIFY_SIZE_GUIDE_PATH . 'inc/elementor/abstract/class-base-widget.php';
 	}
+
+    /**
+     *  Plugin class constructor
+     *
+     * Register plugin action hooks and filters
+     *
+     * @since 1.2.0
+     * @access public
+     */
+    public function __construct() {
+        $this->setup_hooks();
+    }
 }
 // Instantiate Boostify_Size_Guide\Elementor Class
-Elementor_Sg::instance();
+Elementor::instance();
 

@@ -32,11 +32,12 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 		}
 
 		public function includes() {
-			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/helper.php';
-			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/admin/class-admin.php';
-			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/admin/class-metabox.php';
-			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/elementor/class-template-render.php';
-			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/elementor/class-elementor.php';
+            include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/admin/class-admin.php';
+            include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/admin/class-metabox.php';
+            include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/class-template.php';
+            include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/helper.php';
+            include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/elementor/class-elementor.php';
+            include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/elementor/class-template-sg-render.php';
 		}
 
 		public function hooks() {
@@ -85,7 +86,7 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 
 		public function init() {
 			new Boostify_Size_Guide\Metabox();
-			new Boostify_Size_Guide\Template_Sg_Render();			
+			new Boostify_Size_Guide\Template_Sg_Render();
 		}
 
 		public function test($value='') {
@@ -147,7 +148,7 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 
 			// Style
 			wp_enqueue_style(
-				'boostify-hf-style',
+				'boostify-sg-style',
 				BOOSTIFY_SIZE_GUIDE_URL . 'assets/css/style.css',
 				array(),
 				BOOSTIFY_SIZE_GUIDE_VER
@@ -169,7 +170,7 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 
 				echo '<div class="notice notice-error">';
 				/* Translators: URL to install or activate Elementor plugin. */
-				echo '<p>' . sprintf( __( 'The <strong>Header Footer Elementor</strong> plugin requires <strong><a href="%s">Elementor</strong></a> plugin installed & activated.', 'header-footer-elementor' ) . '</p>', $url );// phpcs:ignore
+				echo '<p>' . sprintf( __( 'The <strong>Size Guide Elementor</strong> plugin requires <strong><a href="%s">Elementor</strong></a> plugin installed & activated.', 'size-guide-elementor' ) . '</p>', $url );// phpcs:ignore
 				echo '</div>';
 			}
 		}

@@ -30,14 +30,14 @@ class Admin {
 
 	public function hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_admin_style' ) );
-		add_filter( 'manage_btf_builder_posts_columns', array( $this, 'columns_head' ) );
-		add_action( 'manage_btf_builder_posts_custom_column', array( $this, 'columns_content' ), 10, 2 );
+		add_filter( 'manage_btfsg_builder_posts_columns', array( $this, 'columns_head' ) );
+		add_action( 'manage_btfsg_builder_posts_custom_column', array( $this, 'columns_content' ), 10, 2 );
 	}
 
 	public function load_admin_style() {
 
 		wp_enqueue_style(
-			'boostify-hf-admin',
+			'boostify-sg-admin',
 			BOOSTIFY_SIZE_GUIDE_URL . 'assets/css/admin/admin.css',
 			array(),
 			BOOSTIFY_SIZE_GUIDE_VER
@@ -51,7 +51,7 @@ class Admin {
 		);
 
 		wp_enqueue_script(
-			'boostify-hf-admin',
+			'boostify-sg-admin',
 			BOOSTIFY_SIZE_GUIDE_URL . 'assets/js/admin' . boostify_size_guide_suffix() . '.js',
 			array( 'jquery', 'suggest' ),
 			BOOSTIFY_SIZE_GUIDE_VER,
@@ -64,7 +64,7 @@ class Admin {
 		);
 
 		wp_localize_script(
-			'boostify-hf-admin',
+			'boostify-sg-admin',
 			'admin',
 			$admin_vars
 		);

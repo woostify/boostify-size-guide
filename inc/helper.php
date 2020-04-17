@@ -72,22 +72,3 @@ function bosstify_size_guide() {
     </div>
     <?php
 }
-
-/**
- * Get content single builder .
- *
- * @return     get content
- */
-
-function boostify_size_guide_content() {
-	$id   = get_the_ID();
-	$type = get_post_meta( $id, 'bsg_type' );
-
-	if ( empty( $type ) ) {
-		$type[0] = 'size_guide';
-	}
-	if ( 'size_guide' === $type[0] ) {
-        $path = BOOSTIFY_SIZE_GUIDE_PATH . 'templates/content/content-size-guide.php';
-    }
-	load_template( $path );
-}
