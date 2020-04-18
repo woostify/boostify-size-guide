@@ -47,17 +47,20 @@ class Template {
 	 * Hook in methods.
 	 */
 	public function __construct() {
+        add_action( 'wp_head', array( $this, 'wp_head' ) );
 		add_filter( 'single_template', array( $this, 'single_template' ) );
 	}
-
 
 	public function single_template( $single_template ) {
 		if ( 'btfsg_builder' == get_post_type() ) { // phpcs:ignore
 			$single_template = BOOSTIFY_SIZE_GUIDE_PATH . 'templates/sg.php';
-		}
-        
+		}        
 		return $single_template;
 	}
+
+    public function wp_head() {
+        wp_reset_postdata();
+    }
 }
 
 Template::instance();
