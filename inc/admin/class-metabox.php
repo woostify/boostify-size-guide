@@ -23,10 +23,8 @@ class Metabox {
 		add_action( 'add_meta_boxes', array( $this, 'pagesetting_meta_box' ) );
 		add_action( 'save_post', array( $this, 'pagesetting_save' ) );
 		add_action( 'wp_ajax_boostify_sg_load_autocomplate', array( $this, 'boostify_sg_input' ) );
-		add_action( 'wp_ajax_nopriv_boostify_sg_load_autocomplate', array( $this, 'boostify_sg_input' ) );
 		add_action( 'wp_ajax_boostify_sg_post_admin', array( $this, 'boostify_sg_post_admin' ) );
-        // Ajax select data.
-        add_action( 'wp_ajax_boostify_size_guide_select_categories', array( $this, 'boostify_sg_select_categories' ) );
+        add_action( 'wp_ajax_boostify_sg_cat_admin', array( $this, 'boostify_sg_cat_admin' ) );
 	}
 
 	// Type Builder
@@ -113,15 +111,6 @@ class Metabox {
                 $display
             );
 
-            // Do Not Display On
-            $no_display = sanitize_text_field( $_POST['bsg_no_display'] );
-
-            update_post_meta(
-                $post_id,
-                'bsg_no_display',
-                $no_display
-            );
-
             // Post
             if ( array_key_exists( 'bsg_post', $_POST ) ) {
                 $post = sanitize_text_field( $_POST['bsg_post'] );
@@ -130,28 +119,6 @@ class Metabox {
                     $post_id,
                     'bsg_post',
                     $post
-                );
-            }
-
-            // Ex Post
-            if ( array_key_exists( 'bsg_ex_post', $_POST ) ) {
-                $ex_post = sanitize_text_field( $_POST['bsg_ex_post'] );
-
-                update_post_meta(
-                    $post_id,
-                    'bsg_ex_post',
-                    $ex_post
-                );
-            }
-
-            // Ex Post Type
-            if ( array_key_exists( 'bsg_ex_post_type', $_POST ) ) {
-                $ex_post_type = sanitize_text_field( $_POST['bsg_ex_post_type'] );
-
-                update_post_meta(
-                    $post_id,
-                    'bsg_ex_post_type',
-                    $ex_post_type
                 );
             }
 
@@ -183,76 +150,82 @@ class Metabox {
                 <div class="condition-group display--on">
                     <div class="parent-item">
                         <label><?php echo esc_html__( 'Display On', 'boostify' ); ?></label>
-                        <select name="bhf_display" class="display-on">
-                            <?php
-                            $args = array(
-                                'hide_empty' => true,
-                            );
-
-                            $cats = get_terms( 'product_cat', $args );
-
-                            if ( ! empty( $cats ) && ! is_wp_error( $cats ) ) {
-                                ?>
-                                <span class="woostify-multi-select-id" data-id="all">
-                                    <?php esc_html_e( 'All Categoties', 'boostify' ); ?>
-                                </span>
-                                <?php
-                                foreach ( $cats as $key => $k ) {
-                                    $selected = ( $key == $display ) ? 'selected' : ''; // phpcs:ignore
-                                    ?>
-                                    <span class="woostify-multi-select-id" data-id="<?php echo esc_attr( $k->term_id ); ?>">
-                                        <?php echo esc_html( $k->name ); ?>
-                                    </span>
-                                    <option value="<?php echo esc_attr( $k->term_id ); ?>" <?php echo esc_attr( $selected ); ?>>
-                                        <?php echo esc_html( $k->name ); ?>
-                                    </option>
-                                    <?php
-                                }
-                            }
-                            ?>
-                        </select>
-                    </div>
-
-                    <div class="child-item">
                         <div class="input-item-wrapper">
-                            <?php
-                            if ( ! empty( $post_id ) && ! empty( $post_type ) ) :
-
-                                ?>
-                            <div class="boostify-section-select-post <?php echo ( is_string( $list_post ) ? 'select-all' : 'render--post has-option' ); ?>">
-
-                                <span class="boostify-select-all-post<?php echo ( is_string( $list_post ) ? '' : ' hidden' ); ?>">
-                                    <span class="boostify-select-all"><?php echo esc_html__( 'All', 'boostify' ); ?></span>
+                            <div class="boostify-section-select-category <?php echo ( is_string( $list_post ) ? 'select-all' : 'render--post has-option' ); ?>">
+                                <span class="boostify-select-all-category<?php echo ( is_string( $list_post ) ? '' : ' hidden' ); ?>">
+                                    <span class="boostify-select-all"><?php echo esc_html__( 'All catergory', 'boostify' ); ?></span>
                                     <span class="boostify-arrow ion-chevron-down"></span>
                                 </span>
 
-                                <div class="boostify-section-render--post <?php echo ( is_string( $list_post ) ? 'hidden' : '' ); ?>">
+                                <div class="boostify-section-render--category <?php echo ( is_string( $list_post ) ? 'hidden' : '' ); ?>">
                                     <div class="boostify-auto-complete-field">
                                         <?php
-                                        if ( is_array( $list_post ) ) :
+                                        $args = array(
+                                            'hide_empty' => true,
+                                        );
 
-                                            foreach ( $list_post as $id ) :
-                                                $id = (int) $id;
+                                        $cats = get_terms( 'product_cat', $args );
+
+                                        if ( ! empty( $cats ) && ! is_wp_error( $cats ) ) {
+                                            foreach ( $cats as $k ) {
                                                 ?>
-
                                                 <span class="boostify-auto-complete-key">
-                                                    <span class="boostify-title"><?php echo esc_html( get_the_title( $id ) ); ?></span>
-                                                    <span class="btn-boostify-auto-complete-delete ion-close" data-item="<?php echo esc_attr( $id ); ?>"></span>
+                                                    <span class="boostify-title">
+                                                        <?php echo esc_html( $k->name ); ?>
+                                                    </span>
+                                                    <span class="btn-boostify-auto-complete-delete ion-close" data-item="<?php echo esc_attr( $k->term_id ); ?>"></span>
                                                 </span>
+
                                                 <?php
-                                            endforeach;
-                                        endif;
+                                            }
+                                        }
                                         ?>
                                         <input type="text" class="boostify--sg-post-name" aria-autocomplete="list" size="1">
                                     </div>
                                 </div>
 
                             </div>
-                            <input type="hidden" name="bhf_post" value="<?php echo esc_html( $post_id ); ?>">
-                            <div class="boostify-data"></div>
-                                <?php
-                            endif;
-                            ?>
+                            <input type="hidden" name="bsg_category" value="<?php echo esc_html( $post_id ); ?>">
+                            <div class="boostify-data-category"></div>
+                        </div>
+                    </div>
+
+                    <div class="child-item">
+                        <div class="input-item-wrapper">
+                            <?php if ( ! empty( $post_id ) && ! empty( $post_type ) ) : ?>
+                                <div class="boostify-section-select-post <?php echo ( is_string( $list_post ) ? 'select-all' : 'render--post has-option' ); ?>">
+                                    <span class="boostify-select-all-post<?php echo ( is_string( $list_post ) ? '' : ' hidden' ); ?>">
+                                        <span class="boostify-select-all">
+                                            <?php echo esc_html__( 'All', 'boostify' ); ?>
+                                        </span>
+                                        <span class="boostify-arrow ion-chevron-down"></span>
+                                    </span>
+
+                                    <div class="boostify-section-render--post <?php echo ( is_string( $list_post ) ? 'hidden' : '' ); ?>">
+                                        <div class="boostify-auto-complete-field">
+                                            <?php
+                                            if ( is_array( $list_post ) ) :
+
+                                                foreach ( $list_post as $id ) :
+                                                    $id = (int) $id;
+                                                    ?>
+
+                                                    <span class="boostify-auto-complete-key">
+                                                        <span class="boostify-title"><?php echo esc_html( get_the_title( $id ) ); ?></span>
+                                                        <span class="btn-boostify-auto-complete-delete ion-close" data-item="<?php echo esc_attr( $id ); ?>"></span>
+                                                    </span>
+                                                    <?php
+                                                endforeach;
+                                            endif;
+                                            ?>
+                                            <input type="text" class="boostify--sg-post-name" aria-autocomplete="list" size="1">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" name="bsg_post" value="<?php echo esc_html( $post_id ); ?>">
+                                <div class="boostify-data"></div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -260,55 +233,15 @@ class Metabox {
 		<?php
 	}
 
-    /**
-     * Select categories
-     */
-    public function boostify_sg_select_categories() {
-        check_ajax_referer( 'ht_hf_nonce' );
-        $value = isset( $_POST['keyword'] ) ? sanitize_text_field( wp_unslash( $_POST['keyword'] ) ) : '';
-
-        ob_start();
-
-        $args = array(
-            'hide_empty' => true,
-            'search'     => $value,
-        );
-        $cats = get_terms( 'product_cat', $args );
-
-        if ( ! empty( $cats ) && ! is_wp_error( $cats ) ) {
-            ?>
-                <span class="woostify-multi-select-id" data-id="all">
-                    <?php esc_html_e( 'All Categoties', 'boostify' ); ?>
-                </span>
-            <?php
-            foreach ( $cats as $k ) {
-                ?>
-                <span class="woostify-multi-select-id" data-id="<?php echo esc_attr( $k->term_id ); ?>">
-                    <?php echo esc_html( $k->name ); ?>
-                </span>
-                <?php
-            }
-        } else {
-            ?>
-            <span class="no-posts-found"><?php esc_html_e( 'No product category found', 'boostify' ); ?></span>
-            <?php
-        }
-
-        $res = ob_get_clean();
-
-        wp_send_json_success( $res );
-    }
-
 	public function boostify_sg_post_admin() {
 		check_ajax_referer( 'ht_hf_nonce' );
-		$post_type = sanitize_text_field( $_GET['post_type'] );
 		$keyword   = sanitize_text_field( $_GET['key'] );
 
 		$the_query = new \WP_Query(
 			array(
 				's'              => $keyword,
 				'posts_per_page' => -1,
-				'post_type'      => $post_type,
+				'post_type'      => 'product',
 			)
 		);
 

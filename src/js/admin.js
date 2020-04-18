@@ -33,35 +33,6 @@
 		}
 	);
 
-	// Show Auto Complete No Display
-	$( 'body' ).on(
-		'change',
-		'.no-display-on',
-		function(e) {
-			var btn      = $( this );
-			var postType = btn.val();
-			var data     = {
-				action: 'boostify_sg_ex_auto',//boostify_sg_post_admin
-				_ajax_nonce: admin.nonce,
-				post_type: postType,
-			};
-			$.ajax(
-				{
-					type: 'POST',
-					url: admin.url,
-					data: data,
-					beforeSend: function (response) {
-						$( '#ht_sg_setting' ).addClass( 'loading' );
-					},
-					success: function (response) {
-						$( '#ht_sg_setting' ).removeClass( 'loading' );
-						btn.parents( '.condition-group' ).find( '.child-item' ).html( response );
-					},
-				}
-			);
-		}
-	);
-
 	// Load post display
 	$( 'body' ).on(
 		'keyup',
@@ -132,42 +103,6 @@
 		}
 	);
 
-	// Select Post not display
-	$( 'body' ).on(
-		'click',
-		'.not-display .post-item',
-		function () {
-
-			var listPost = $( 'input[name=bsg_ex_post]' ).val();
-			var all      = $( '.not-display .boostify-select-all-post' );
-			var parent   = all.parents( '.boostify-section-select-post' );
-			if ( ! all.hasClass( 'hidden' ) ) {
-				all.addClass( 'hidden' );
-			}
-			if ( ! listPost || 'all' == listPost ) {
-				listPost = [];
-			} else {
-				listPost = listPost.split( ',' );
-			}
-			if ( ! parent.hasClass( 'has-option' ) ) {
-				parent.addClass( 'has-option' );
-			}
-			var id    = $( this ).attr( 'data-item' );
-			var title = $( this ).html();
-			if ( ! listPost.includes( id ) ) {
-				listPost.push( id );
-				var html = '<span class="boostify-auto-complete-key">' +
-								'<span class="boostify-title">' + title + '</span>' +
-								'<span class="btn-boostify-auto-complete-delete ion-close" data-item="' + id + '"></span>'
-							'</span>';
-				$( '.boostify--sg-post-name' ).before( html );
-			}
-			$( 'input[name=bsg_ex_post]' ).val( listPost );
-			$( '.boostify--sg-post-name' ).val( '' );// Reset Input
-			$( '.boostify-data' ).html( '' );
-		}
-	);
-
 	// Focus Input Field
 	$( 'body' ).on(
 		'click',
@@ -225,42 +160,6 @@
 		function( e ) {
 			$( '.boostify-data' ).html( '' );
 			$( '.boostify--sg-post-name' ).val( '' );// Reset data
-		}
-	);
-
-	// Select-type
-	$( '#container' ).on(
-		'change',
-		function(e) {
-			var btn  = $( this );
-			var type = $( this ).val();
-			var data = {
-				action: 'boostify_sg_type',//boostify_sg_post_admin
-				_ajax_nonce: admin.nonce,
-				type: type,
-			};
-			if ( 'sub_menu' == type ) {
-				btn.parents('.input-wrapper').siblings('.input-wrapper').remove();
-			} else {
-				var check = btn.parents('.input-wrapper').siblings('.input-wrapper');
-				console.log( check  );
-				if ( check.length == 0 ) {
-					$.ajax(
-						{
-							type: 'GET',
-							url: admin.url,
-							data: data,
-							beforeSend: function (response) {
-								$( '#ht_sg_setting' ).addClass( 'loading' );
-							},
-							success: function (response) {
-								$( '#ht_sg_setting' ).removeClass( 'loading' );
-								$('.form-meta-footer').append( response );
-							},
-						}
-					);
-				}
-			}
 		}
 	);
 
