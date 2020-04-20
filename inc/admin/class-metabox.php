@@ -100,16 +100,16 @@ class Metabox {
 			$type
 		);
 
+        // Display On
+        $display = sanitize_text_field( $_POST['bsg_display'] );
+
+        update_post_meta(
+            $post_id,
+            'bsg_display',
+            $display
+        );
+
         if ( 'size_guide' !== $type ) {
-
-            // Display On
-            $display = sanitize_text_field( $_POST['bsg_display'] );
-
-            update_post_meta(
-                $post_id,
-                'bsg_display',
-                $display
-            );
 
             // Post
             if ( array_key_exists( 'bsg_post', $_POST ) ) {
@@ -140,54 +140,36 @@ class Metabox {
         $post_id      = get_post_meta( $post->ID, 'bsg_post', true );
         $post_type    = get_post_meta( $post->ID, 'bsg_post_type', true );
         $list_post    = $post_id;
+        $list_display = explode( ',', $display );
         if ( 'all' !== $post_id ) {
             $list_post = explode( ',', $post_id );
         }
-
+        var_dump( $list_display ); // day ong nhung sao nno ko lay ra mang khi chon may cai nhi
         var_dump( $list_post );
 		?>
 			<div class="input-wrapper">
                 <div class="condition-group display--on">
                     <div class="parent-item">
                         <label><?php echo esc_html__( 'Display On', 'boostify' ); ?></label>
-                        <div class="input-item-wrapper">
-                            <div class="boostify-section-select-category <?php echo ( is_string( $list_post ) ? 'select-all' : 'render--post has-option' ); ?>">
-                                <span class="boostify-select-all-category<?php echo ( is_string( $list_post ) ? '' : ' hidden' ); ?>">
-                                    <span class="boostify-select-all"><?php echo esc_html__( 'All catergory', 'boostify' ); ?></span>
-                                    <span class="boostify-arrow ion-chevron-down"></span>
-                                </span>
+                        <select name="bsg_display" class="category-display-on" multiple='multiple'>
+                            <?php
+                                $args = array(
+                                    'hide_empty' => true,
+                                );
 
-                                <div class="boostify-section-render--category <?php echo ( is_string( $list_post ) ? 'hidden' : '' ); ?>">
-                                    <div class="boostify-auto-complete-field">
-                                        <?php
-                                        $args = array(
-                                            'hide_empty' => true,
-                                        );
+                                $cats = get_terms( 'product_cat', $args );
 
-                                        $cats = get_terms( 'product_cat', $args );
-
-                                        if ( ! empty( $cats ) && ! is_wp_error( $cats ) ) {
-                                            foreach ( $cats as $k ) {
-                                                ?>
-                                                <span class="boostify-auto-complete-key">
-                                                    <span class="boostify-title">
-                                                        <?php echo esc_html( $k->name ); ?>
-                                                    </span>
-                                                    <span class="btn-boostify-auto-complete-delete ion-close" data-item="<?php echo esc_attr( $k->term_id ); ?>"></span>
-                                                </span>
-
-                                                <?php
-                                            }
-                                        }
+                                if ( ! empty( $cats ) && ! is_wp_error( $cats ) ) {
+                                    foreach ( $cats as $key => $k ) {
                                         ?>
-                                        <input type="text" class="boostify--sg-post-name" aria-autocomplete="list" size="1">
-                                    </div>
-                                </div>
-
-                            </div>
-                            <input type="hidden" name="bsg_category" value="<?php echo esc_html( $post_id ); ?>">
-                            <div class="boostify-data-category"></div>
-                        </div>
+                                        <option value="<?php echo esc_attr( $k->term_id ); ?>">
+                                            <?php echo esc_html( $k->name ); ?>
+                                        </option>
+                                        <?php
+                                    }
+                                }
+                            ?>
+                        </select>
                     </div>
 
                     <div class="child-item">

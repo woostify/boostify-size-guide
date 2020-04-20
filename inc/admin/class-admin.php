@@ -43,6 +43,13 @@ class Admin {
 			BOOSTIFY_SIZE_GUIDE_VER
 		);
 
+        wp_enqueue_style(
+            'boostify-jquey-multiselect-admin',
+            BOOSTIFY_SIZE_GUIDE_URL . 'assets/css/admin/jquey.multiselect.css',
+            array(),
+            BOOSTIFY_SIZE_GUIDE_VER
+        );
+
 		wp_enqueue_style(
 			'ionicons',
 			BOOSTIFY_SIZE_GUIDE_URL . '/assets/css/ionicons.css',
@@ -57,6 +64,22 @@ class Admin {
 			BOOSTIFY_SIZE_GUIDE_VER,
 			true
 		);
+
+        wp_enqueue_script(
+            'jquery-multiselect',
+            BOOSTIFY_SIZE_GUIDE_URL . 'assets/js/jquery.multiselect' . boostify_size_guide_suffix() . '.js',
+            array( 'jquery' ),
+            BOOSTIFY_SIZE_GUIDE_VER,
+            true
+        );
+
+        wp_enqueue_script(
+            'boostify-custom',
+            BOOSTIFY_SIZE_GUIDE_URL . 'assets/js/custom.js',
+            array( 'jquery' ),
+            BOOSTIFY_SIZE_GUIDE_VER,
+            true
+        );
 
 		$admin_vars = array(
 			'url'   => admin_url( 'admin-ajax.php' ),
