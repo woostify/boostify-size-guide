@@ -1,19 +1,19 @@
-#ht_sg_setting .form-meta-footer {
+#boostify_metabox_settings_size_guide .form-meta-footer {
   margin-top: 15px;
 }
 
-#ht_sg_setting .form-meta-footer label {
+#boostify_metabox_settings_size_guide .form-meta-footer label {
   display: block;
   margin-bottom: 10px;
   vertical-align: baseline;
   font-weight: 600;
 }
 
-#ht_sg_setting .form-meta-footer .input-wrapper {
+#boostify_metabox_settings_size_guide .form-meta-footer .input-wrapper {
   margin-bottom: 30px;
 }
 
-#ht_sg_setting .form-meta-footer select {
+#boostify_metabox_settings_size_guide .form-meta-footer select {
   min-width: 180px;
 }
 
@@ -68,7 +68,7 @@
   margin: 20px 0;
 }
 
-#ht_sg_setting.loading:after {
+#boostify_metabox_settings_size_guide.loading:after {
   display: block;
   content: '';
   position: absolute;
@@ -81,7 +81,7 @@
   z-index: 9;
 }
 
-#ht_sg_setting.loading:before {
+#boostify_metabox_settings_size_guide.loading:before {
   border: 6px solid #f3f3f3;
   /* Light grey */
   border-top: 6px solid #007cba;

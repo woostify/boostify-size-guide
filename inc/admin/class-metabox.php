@@ -12,6 +12,13 @@ defined( 'ABSPATH' ) || exit;
 
 class Metabox {
 
+    /**
+     * Meta Option
+     *
+     * @var $meta_option
+     */
+    private static $meta_option;
+
 	/**
 	 * Boostify Size Guide Metabox Constructor.
 	 */
@@ -20,8 +27,19 @@ class Metabox {
 	}
 
 	public function hooks() {
-		add_action( 'add_meta_boxes', array( $this, 'pagesetting_meta_box' ) );
-		add_action( 'save_post', array( $this, 'pagesetting_save' ) );
+		add_action( 'add_meta_boxes', array( $this, 'setup_size_guide_metabox' ) );
+		add_action( 'save_post', array( $this, 'save_size_guide_metabox' ) );
+        self::$meta_option = array(
+            'size-guide-for-category' => array(
+                'default'  => '',
+                'sanitize' => 'FILTER_DEFAULT',
+            ),
+            'size-guide-for-product'  => array(
+                'default'  => '',
+                'sanitize' => 'FILTER_DEFAULT',
+            ),
+        );
+
 		add_action( 'wp_ajax_boostify_sg_load_autocomplate', array( $this, 'boostify_sg_input' ) );
 		add_action( 'wp_ajax_boostify_sg_post_admin', array( $this, 'boostify_sg_post_admin' ) );
         add_action( 'wp_ajax_boostify_sg_cat_admin', array( $this, 'boostify_sg_cat_admin' ) );
@@ -36,21 +54,34 @@ class Metabox {
 		return $type;
 	}
 
-	// Meta Box In btfsg_builder post type
-	public function pagesetting_meta_box() {
-		add_meta_box( 'ht_sg_setting', 'Size Guide Settings', array( $this, 'ht_sgsetting_output' ), 'btfsg_builder', 'side', 'high' );
-	}
+	/**
+     * Setup Metabox
+     */
+    public function setup_size_guide_metabox() {
+        add_meta_box(
+            'boostify_metabox_settings_size_guide',
+            __( 'Size Guide Settings', 'boostify' ),
+            array( $this, 'size_guide_markup' ),
+            'btfsg_builder',
+            'side',
+            'high'
+        );
+    }
 
-
-	// Screen meta box in btfsg_builder post type
-	public function ht_sgsetting_output( $post ) {
-		$types         = $this->type_builder();
-		$type          = get_post_meta( $post->ID, 'bsg_type', true );
-		$display       = get_post_meta( $post->ID, 'bsg_display', true );
-		$posts         = get_post_meta( $post->ID, 'bsg_post', true );
-		$post_type     = get_post_meta( $post->ID, 'bsg_post_type', true );
-
+	/**
+     * Metabox Markup
+     *
+     * @param  object $post Post object.
+     * @return void
+     */
+	public function size_guide_markup( $post ) {
 		wp_nonce_field( 'boostify_sg_action', 'boostify_sg' );
+
+		$type       = get_post_meta( $post->ID, 'bsg_type', true );
+		$display    = get_post_meta( $post->ID, 'bsg_display', true );
+		$posts      = get_post_meta( $post->ID, 'bsg_post', true );
+		$post_type  = get_post_meta( $post->ID, 'bsg_post_type', true );
+
 		?>
 
 		<div class="form-meta-footer">
@@ -63,33 +94,68 @@ class Metabox {
 		<?php
 	}
 
-	// Save meta box setting in btf_buider postType
-	public function pagesetting_save( $post_id ) {
-		$nonce_name   = ( array_key_exists( 'boostify_sg', $_POST ) ) ? sanitize_text_field( $_POST['boostify_sg'] ) : '';
+	/**
+     * Metabox Save
+     *
+     * @param  number $post_id Post ID.
+     * @return void
+     */
+	public function save_size_guide_metabox( $post_id ) {
+
+        // Checks save status.
+        $is_user_can_edit = current_user_can( 'edit_posts' );
+        $is_autosave      = wp_is_post_autosave( $post_id );
+        $is_revision      = wp_is_post_revision( $post_id );
+        $is_valid_nonce   = ( isset( $_POST['boostify_metabox_settings_size_guide'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['boostify_metabox_settings_size_guide'] ) ), basename( __FILE__ ) ) ) ? true : false;
+
+		$nonce_name   = ( array_key_exists( 'boostify_metabox_settings_size_guide', $_POST ) ) ? sanitize_text_field( $_POST['boostify_metabox_settings_size_guide'] ) : '';
 		$nonce_action = 'boostify_sg_action';
 
 		if ( ! isset( $nonce_name ) ) {
 			return;
 		}
-		// Check if a nonce is valid.
-		if ( ! wp_verify_nonce( $nonce_name, $nonce_action ) ) {
-			return;
-		}
 
-		// Check if the user has permissions to save data.
-		if ( ! current_user_can( 'edit_post', $post_id ) ) {
-			return;
-		}
+        // Exits script depending on save status.
+        if ( ! $is_user_can_edit || $is_autosave || $is_revision || ! $is_valid_nonce || ! wp_verify_nonce( $nonce_name, $nonce_action ) ) {
+            return;
+        }
 
-		// Check if it's not an autosave.
-		if ( wp_is_post_autosave( $post_id ) ) {
-			return;
-		}
+        /**
+         * Get meta options
+         */
+        $post_meta = self::get_size_guide_metabox_option();
 
-		// Check if it's not a revision.
-		if ( wp_is_post_revision( $post_id ) ) {
-			return;
-		}
+        foreach ( $post_meta as $key => $data ) {
+
+            // Sanitize values.
+            $sanitize_filter = isset( $data['sanitize'] ) ? $data['sanitize'] : 'FILTER_DEFAULT';
+
+            switch ( $sanitize_filter ) {
+
+                case 'FILTER_SANITIZE_STRING':
+                        $meta_value = filter_input( INPUT_POST, $key, FILTER_SANITIZE_STRING );
+                    break;
+
+                case 'FILTER_SANITIZE_URL':
+                        $meta_value = filter_input( INPUT_POST, $key, FILTER_SANITIZE_URL );
+                    break;
+
+                case 'FILTER_SANITIZE_NUMBER_INT':
+                        $meta_value = filter_input( INPUT_POST, $key, FILTER_SANITIZE_NUMBER_INT );
+                    break;
+
+                default:
+                        $meta_value = filter_input( INPUT_POST, $key, FILTER_DEFAULT );
+                    break;
+            }
+
+            // Update values.
+            if ( $meta_value ) {
+                update_post_meta( $post_id, $key, $meta_value );
+            } else {
+                delete_post_meta( $post_id, $key );
+            }
+        }
 
 		// Type of Template Builder
 		$type = sanitize_text_field( $_POST['bsg_type'] );
@@ -144,14 +210,15 @@ class Metabox {
         if ( 'all' !== $post_id ) {
             $list_post = explode( ',', $post_id );
         }
-        var_dump( $list_display ); // day ong nhung sao nno ko lay ra mang khi chon may cai nhi
+
+        var_dump( $list_display );
         var_dump( $list_post );
 		?>
 			<div class="input-wrapper">
                 <div class="condition-group display--on">
                     <div class="parent-item">
                         <label><?php echo esc_html__( 'Display On', 'boostify' ); ?></label>
-                        <select name="bsg_display" class="category-display-on" multiple='multiple'>
+                        <select name="bsg_display" class="display-on" multiple='multiple'>
                             <?php
                                 $args = array(
                                     'hide_empty' => true,
@@ -217,11 +284,13 @@ class Metabox {
 
 	public function boostify_sg_post_admin() {
 		check_ajax_referer( 'ht_hf_nonce' );
-		$keyword   = sanitize_text_field( $_GET['key'] );
+		$keyword    = sanitize_text_field( $_GET['key'] );
+        $product_data        = get_post_meta( $post->ID, 'bsg_post', true );
+        $selected_product_id = explode( '|', $product_data );
 
 		$the_query = new \WP_Query(
 			array(
-				's'              => $keyword,
+                's'              => $keyword,
 				'posts_per_page' => -1,
 				'post_type'      => 'product',
 			)
@@ -262,19 +331,6 @@ class Metabox {
 		die();
 
 	}
-
-	public function get_posts( $post_type ) {
-		$args  = array(
-			'post_type'      => 'product',
-			'orderby'        => 'name',
-			'order'          => 'ASC',
-			'posts_per_page' => -1,
-		);
-		$posts = new \WP_Query( $args );
-
-		return $posts;
-	}
-
 
 	// For Ajax For Select single post display
 	public function boostify_sg_input() {

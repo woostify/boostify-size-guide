@@ -21,10 +21,10 @@
 					url: admin.url,
 					data: data,
 					beforeSend: function (response) {
-						$( '#ht_sg_setting' ).addClass( 'loading' );
+						$( '#boostify_metabox_settings_size_guide' ).addClass( 'loading' );
 					},
 					success: function (response) {
-						$( '#ht_sg_setting' ).removeClass( 'loading' );
+						$( '#boostify_metabox_settings_size_guide' ).removeClass( 'loading' );
 						console.log( response );
 						btn.parents( '.condition-group' ).find( '.child-item' ).html( response );
 					},
@@ -56,10 +56,10 @@
 					url: admin.url,
 					data: data,
 					beforeSend: function (response) {
-						$( '#ht_sg_setting' ).addClass( 'loading' );
+						$( '#boostify_metabox_settings_size_guide' ).addClass( 'loading' );
 					},
 					success: function (response) {
-						$( '#ht_sg_setting' ).removeClass( 'loading' );
+						$( '#boostify_metabox_settings_size_guide' ).removeClass( 'loading' );
 						parentItem.find( '.boostify-data' ).html( response );
 					},
 				}

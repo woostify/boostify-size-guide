@@ -1,1 +1,1 @@
-(function ($) {    $( '.category-display-on' ).multiselect();} )( jQuery );
+(function ($) {    $( '.display-on' ).multiselect();} )( jQuery );
