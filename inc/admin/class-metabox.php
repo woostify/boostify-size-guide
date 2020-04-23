@@ -23,8 +23,6 @@ class Metabox {
 		add_action( 'add_meta_boxes', array( $this, 'setup_size_guide_metabox' ) );
 		add_action( 'save_post', array( $this, 'save_size_guide_metabox' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
-
-		//add_action( 'wp_ajax_boostify_sg_load_autocomplate', array( $this, 'boostify_sg_input' ) );
 	}
 
 	// Type Builder.

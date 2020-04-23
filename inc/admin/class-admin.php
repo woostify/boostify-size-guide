@@ -57,14 +57,6 @@ class Admin {
 			BOOSTIFY_SIZE_GUIDE_VER
 		);
 
-		wp_enqueue_script(
-			'boostify-sg-admin',
-			BOOSTIFY_SIZE_GUIDE_URL . 'assets/js/admin' . boostify_size_guide_suffix() . '.js',
-			array( 'jquery', 'suggest' ),
-			BOOSTIFY_SIZE_GUIDE_VER,
-			true
-		);
-
         wp_enqueue_script(
             'select2',
             BOOSTIFY_SIZE_GUIDE_URL . 'assets/js/select2' . boostify_size_guide_suffix() . '.js',
@@ -80,17 +72,6 @@ class Admin {
             BOOSTIFY_SIZE_GUIDE_VER,
             true
         );
-
-		$admin_vars = array(
-			'url'   => admin_url( 'admin-ajax.php' ),
-			'nonce' => wp_create_nonce( 'ht_hf_nonce' ),
-		);
-
-		wp_localize_script(
-			'boostify-sg-admin',
-			'admin',
-			$admin_vars
-		);
 	}
 
 	public function columns_head( $columns ) {
