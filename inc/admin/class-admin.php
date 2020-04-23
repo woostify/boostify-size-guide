@@ -78,7 +78,6 @@ class Admin {
 		$date_column = $columns['date'];
 
 		unset( $columns['date'] );
-		$columns['type']      = __( 'Type', 'boostify' );
 		$columns['shortcode'] = __( 'Shortcode', 'boostify' );
 		$columns['date']      = $date_column;
 
@@ -93,19 +92,11 @@ class Admin {
 				ob_start();
 				?>
 				<span class="bsg-shortcode-col-wrap">
-					<input type="text" readonly="readonly" value="[bsg id='<?php echo esc_attr( $post_id ); ?>' type='<?php echo esc_attr( $type ); ?>']" class="bsg-large-text code">
+					<input type="text" readonly="readonly" value="[bsg id='<?php echo esc_attr( $post_id ); ?>']" class="bsg-large-text code">
 				</span>
 
 				<?php
 
-				ob_get_contents();
-				break;
-
-			case 'type':
-				ob_start();
-				?>
-				<span class="bsg-type"><?php echo esc_html( $type ); ?></span>
-				<?php
 				ob_get_contents();
 				break;
 		}
