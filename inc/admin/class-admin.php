@@ -44,8 +44,8 @@ class Admin {
 		);
 
         wp_enqueue_style(
-            'boostify-jquey-multiselect-admin',
-            BOOSTIFY_SIZE_GUIDE_URL . 'assets/css/admin/jquey.multiselect.css',
+            'select2-css',
+            BOOSTIFY_SIZE_GUIDE_URL . '/assets/css/admin/select2.css',
             array(),
             BOOSTIFY_SIZE_GUIDE_VER
         );
@@ -66,8 +66,8 @@ class Admin {
 		);
 
         wp_enqueue_script(
-            'jquery-multiselect',
-            BOOSTIFY_SIZE_GUIDE_URL . 'assets/js/jquery.multiselect' . boostify_size_guide_suffix() . '.js',
+            'select2',
+            BOOSTIFY_SIZE_GUIDE_URL . 'assets/js/select2' . boostify_size_guide_suffix() . '.js',
             array( 'jquery' ),
             BOOSTIFY_SIZE_GUIDE_VER,
             true
