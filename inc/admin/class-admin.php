@@ -29,7 +29,8 @@ class Admin {
 	}
 
 	public function hooks() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'load_admin_style' ) );
+        add_action( 'admin_enqueue_scripts', array( $this, 'load_admin_style' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'load_wp_style' ) );
 		add_filter( 'manage_btfsg_builder_posts_columns', array( $this, 'columns_head' ) );
 		add_action( 'manage_btfsg_builder_posts_custom_column', array( $this, 'columns_content' ), 10, 2 );
 	}
@@ -73,6 +74,16 @@ class Admin {
             true
         );
 	}
+
+    public function load_wp_style() {
+        wp_enqueue_script(
+            'boostify-sg-size-guide',
+            BOOSTIFY_SIZE_GUIDE_URL . 'assets/js/size-guide.js',
+            array( 'jquery' ),
+            BOOSTIFY_SIZE_GUIDE_VER,
+            true
+        );
+    }
 
 	public function columns_head( $columns ) {
 		$date_column = $columns['date'];
