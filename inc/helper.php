@@ -38,10 +38,10 @@ function bosstify_size_guide() {
 
         if ( in_array( $aproid, $products_id, true ) || in_array( $product_cat_id, $list_category, true ) || in_array( 0, $products_id, true ) || in_array( 0, $products_id, true ) ) {
             ?>
-        <div class="popup">
-            <a href="#" class="btn-size-guide">
+        <div class="boostify-size-guide-popup">
+            <button class="btn-size-guide">
                 <?php echo esc_html( 'Size Guide', 'boostify' ); ?>
-            </a>            
+            </button>            
             <div class="cd-popup">
                 <div class="cd-popup-container">
                     <?php the_content(); ?>

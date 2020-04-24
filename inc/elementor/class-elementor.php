@@ -58,7 +58,7 @@ class Elementor {
 	public function get_widgets() {
 		$widgets = array(
 			'Image_Retina',
-            'Size_Guide',
+            'Site_Search',
 		);
 
 		return $widgets;
@@ -73,10 +73,10 @@ class Elementor {
 	 * @access public
 	 */
 	public function widget_scripts() {
-        // Size Guide
+        // Search
         wp_register_script(
-            'boostify-sg-size-guide',
-            BOOSTIFY_SIZE_GUIDE_URL . 'assets/js/size-guide' . boostify_size_guide_suffix() . '.js',
+            'boostify_hf_search',
+            BOOSTIFY_SIZE_GUIDE_URL . 'assets/js/search' . boostify_size_guide_suffix() . '.js',
             array( 'jquery' ),
             BOOSTIFY_SIZE_GUIDE_VER,
             true
