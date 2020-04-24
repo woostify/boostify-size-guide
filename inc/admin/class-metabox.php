@@ -138,14 +138,6 @@ class Metabox {
 	public function sg_display( $post ) {
         $display    = get_post_meta( $post->ID, 'bsg_category', true );
         $product_id = get_post_meta( $post->ID, 'bsg_post', true );
-
-        if ( 'all' !== $product_id ) {
-            $list_category = explode( ',', $display );
-            $list_post     = explode( ',', $product_id );
-        }
-
-        var_dump( $list_category );
-        var_dump( $list_post );
 		?>
 			<div class="input-wrapper">
                 <div class="condition-group display--on">
