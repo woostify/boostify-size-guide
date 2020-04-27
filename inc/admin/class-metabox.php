@@ -137,9 +137,7 @@ class Metabox {
 
 	public function sg_display( $post ) {
         $display    = get_post_meta( $post->ID, 'bsg_category', true );
-        var_dump( $display );
         $product_id = get_post_meta( $post->ID, 'bsg_post', true );
-        var_dump( $product_id );
 		?>
 			<div class="input-wrapper">
                 <div class="condition-group display--on">
