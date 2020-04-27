@@ -40,14 +40,15 @@ function bosstify_size_guide() {
             ?>
 
             <div class="boostify-size-guide-popup">
-                <button class="btn-size-guide">
-                    <?php echo esc_html( 'Size Guide', 'boostify' ); ?>
-                </button>            
+                <a href="#" class="btn-size-guide">
+                    <i class="fas fa-ruler"></i>
+                    <?php echo get_the_title( $post = 0 ); ?>
+                </a>
                 <div class="cd-popup">
                     <div class="cd-popup-container">
                         <?php the_content(); ?>
-                        <a href="#0" class="cd-popup-close"></a>
                     </div>
+                    <a href="#0" class="cd-popup-close"></a>
                 </div> <!-- cd-popup -->
             </div>
             <?php
