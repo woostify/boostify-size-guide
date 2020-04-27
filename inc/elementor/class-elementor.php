@@ -57,31 +57,12 @@ class Elementor {
 	 */
 	public function get_widgets() {
 		$widgets = array(
-			'Image_Retina',
-            'Site_Search',
+			'Image_Retina'
 		);
 
 		return $widgets;
 	}
 
-	/**
-	 * widget_scripts
-	 *
-	 * Load required plugin core files.
-	 *
-	 * @since 1.2.0
-	 * @access public
-	 */
-	public function widget_scripts() {
-        // Search
-        wp_register_script(
-            'boostify_hf_search',
-            BOOSTIFY_SIZE_GUIDE_URL . 'assets/js/search' . boostify_size_guide_suffix() . '.js',
-            array( 'jquery' ),
-            BOOSTIFY_SIZE_GUIDE_VER,
-            true
-        );
-	}
 	/**
 	 * Include Widgets files
 	 *
