@@ -137,8 +137,6 @@ class Elementor {
 		add_action( 'elementor/init', array( $this, 'register_abstract' ) );
 		// Register custom widget categories.
 		add_action( 'elementor/elements/categories_registered', array( $this, 'add_elementor_widget_categories' ) );
-		// Register widget scripts
-		add_action( 'elementor/frontend/after_register_scripts', array( $this, 'widget_scripts' ) );
 		// Register widgets
 		add_action( 'elementor/widgets/widgets_registered', array( $this, 'init_widgets' ) );
         add_action( 'elementor/controls/controls_registered', array( $this, 'modify_controls' ), 10, 1 );

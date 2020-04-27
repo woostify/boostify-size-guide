@@ -36,20 +36,21 @@ function bosstify_size_guide() {
         $list_category = array_map( 'intval', explode( ',', $display ) );
         $products_id   = array_map( 'intval', explode( ',', $product_id ) );
 
-        if ( in_array( $aproid, $products_id, true ) || in_array( $product_cat_id, $list_category, true ) || in_array( 0, $products_id, true ) || in_array( 0, $products_id, true ) ) {
+        if ( in_array( $product_cat_id[0], $list_category, true ) || in_array( $aproid, $products_id, true ) || 'all' === $display || 'all' === $product_id ) {
             ?>
-        <div class="boostify-size-guide-popup">
-            <button class="btn-size-guide">
-                <?php echo esc_html( 'Size Guide', 'boostify' ); ?>
-            </button>            
-            <div class="cd-popup">
-                <div class="cd-popup-container">
-                    <?php the_content(); ?>
-                    <a href="#0" class="cd-popup-close"></a>
-                </div>
-            </div> <!-- cd-popup -->
-        </div>
-        <?php
+
+            <div class="boostify-size-guide-popup">
+                <button class="btn-size-guide">
+                    <?php echo esc_html( 'Size Guide', 'boostify' ); ?>
+                </button>            
+                <div class="cd-popup">
+                    <div class="cd-popup-container">
+                        <?php the_content(); ?>
+                        <a href="#0" class="cd-popup-close"></a>
+                    </div>
+                </div> <!-- cd-popup -->
+            </div>
+            <?php
         }
     }
 

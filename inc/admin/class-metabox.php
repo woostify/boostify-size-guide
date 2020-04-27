@@ -137,7 +137,9 @@ class Metabox {
 
 	public function sg_display( $post ) {
         $display    = get_post_meta( $post->ID, 'bsg_category', true );
+        var_dump( $display );
         $product_id = get_post_meta( $post->ID, 'bsg_post', true );
+        var_dump( $product_id );
 		?>
 			<div class="input-wrapper">
                 <div class="condition-group display--on">
@@ -145,9 +147,10 @@ class Metabox {
                         <label><?php echo esc_html__( 'Product Category', 'boostify' ); ?></label>
 
                         <select class="display-on" multiple="multiple">
-                            <option value="0">
+                            <option value="all">
                                 <?php echo esc_html( 'All category', 'boostify' ); ?>
                             </option>
+
                             <?php
                                 $args = array(
                                     'hide_empty' => true,
@@ -176,9 +179,10 @@ class Metabox {
                         <label><?php echo esc_html__( 'Apply For Products', 'boostify' ); ?></label>
 
                         <select class="display-product-on" multiple="multiple">
-                            <option value="0">
-                                <?php echo esc_html( 'All category', 'boostify' ); ?>
+                            <option value="all">
+                                <?php echo esc_html( 'All Product', 'boostify' ); ?>
                             </option>
+
                             <?php
                                 $selected_args = array(
                                     'post_type'      => 'product',
