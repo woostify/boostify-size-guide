@@ -1,8 +1,8 @@
-<?php get_header(); ?>
+<?php wp_head(); ?>
 
 <main class="page-content">
     <?php the_content(); ?>
 </main>
 
 <?php
-get_footer();
+wp_footer();
