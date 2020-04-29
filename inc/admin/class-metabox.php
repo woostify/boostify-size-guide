@@ -145,10 +145,6 @@ class Metabox {
                         <label><?php echo esc_html__( 'Product Category', 'boostify' ); ?></label>
 
                         <select class="display-on" multiple="multiple">
-                            <option value="all">
-                                <?php echo esc_html( 'All category', 'boostify' ); ?>
-                            </option>
-
                             <?php
                                 $args = array(
                                     'hide_empty' => true,

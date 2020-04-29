@@ -36,7 +36,7 @@ function bosstify_size_guide() {
         $list_category = array_map( 'intval', explode( ',', $display ) );
         $products_id   = array_map( 'intval', explode( ',', $product_id ) );
 
-        if ( in_array( $product_cat_id[0], $list_category, true ) || in_array( $aproid, $products_id, true ) || 'all' === $display || 'all' === $product_id ) {
+        if ( in_array( $product_cat_id[0], $list_category, true ) || in_array( $aproid, $products_id, true ) || 'all' === $product_id ) {
             ?>
 
             <div class="boostify-size-guide-popup">
