@@ -19,9 +19,6 @@ use Elementor\Scheme_Typography;
 
 /**
  * Image Retina
- *
- * Elementor widget for Image Retina.
- * Aurhor: pcd
  */
 class Image_Retina extends Base_Widget {
 
@@ -62,13 +59,6 @@ class Image_Retina extends Base_Widget {
 	 */
 	public function get_icon() {
 		return 'eicon-eye';
-	}
-
-	/**
-	 * Categories
-	 */
-	public function get_categories() {
-		return array( 'ht_bfsg_builder' );
 	}
 
 	protected function _register_controls() { //phpcs:ignore

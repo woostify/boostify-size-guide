@@ -50,7 +50,7 @@ function bosstify_size_guide() {
 			<div class="boostify-size-guide-popup">
 				<a href="#" class="btn-size-guide">
 					<i class="fas fa-ruler"></i>
-					<?php echo esc_html( get_the_title( $post = 0 ) ); ?>
+					<?php echo esc_html( get_the_title() ); ?>
 				</a>
 				<div class="cd-popup">
 					<div class="cd-popup-container">

@@ -10,14 +10,13 @@ namespace Boostify_Size_Guide;
 use Elementor\Widget_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit; // Exit if accessed directly.
 }
 
 /**
  * Base Widget
  */
 abstract class Base_Widget extends Widget_Base {
-
 	/**
 	 * Retrieve the list of categories the widget belongs to.
 	 *
@@ -26,6 +25,6 @@ abstract class Base_Widget extends Widget_Base {
 	 * @return array Widget categories.
 	 */
 	public function get_categories() {
-		return array( 'ht_sg_builder' );
+		return array( 'ht_bfsg_builder' );
 	}
 }
