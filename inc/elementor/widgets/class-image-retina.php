@@ -1,4 +1,9 @@
 <?php
+/**
+ * Widget Elementor
+ *
+ * @package Boostify_Size_Guide
+ */
 
 namespace Boostify_Size_Guide\Widgets;
 
@@ -59,10 +64,13 @@ class Image_Retina extends Base_Widget {
 		return 'eicon-eye';
 	}
 
-    public function get_categories() {
-        return array( 'ht_bfsg_builder' );
-    }
-    
+	/**
+	 * Categories
+	 */
+	public function get_categories() {
+		return array( 'ht_bfsg_builder' );
+	}
+
 	protected function _register_controls() { //phpcs:ignore
 		$this->retina();
 		$this->image_style();

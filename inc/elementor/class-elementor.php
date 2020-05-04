@@ -3,11 +3,17 @@
  * Class Size Guide Elementor
  *
  * Main Plugin class
+ *
  * @since 1.2.0
+ *
+ * @package Boostify_Size_Guide
  */
 
 namespace Boostify_Size_Guide;
 
+/**
+ * Class Elementor
+ */
 class Elementor {
 	/**
 	 * Instance
@@ -20,8 +26,7 @@ class Elementor {
 	 */
 	private static $instance = null;
 
-
-	private $modules_manager;
+	private $modules_manager; //phpcs:ignore
 	/**
 	 * Instance
 	 *
@@ -40,7 +45,9 @@ class Elementor {
 	}
 
 	/**
-	 * Register custom widget categories.
+	 * Register custom widget categories
+	 *
+	 * @param string $elements_manager type.
 	 */
 	public function add_elementor_widget_categories( $elements_manager ) {
 		$elements_manager->add_category(
@@ -57,7 +64,7 @@ class Elementor {
 	 */
 	public function get_widgets() {
 		$widgets = array(
-			'Image_Retina'
+			'Image_Retina',
 		);
 
 		return $widgets;
@@ -84,34 +91,36 @@ class Elementor {
 		}
 	}
 
-    /**
-     * Add icon for elementor.
-     */
-    public function modify_controls( $controls_registry ) {
-        // Get existing icons
-        $icons = $controls_registry->get_control( 'icon' )->get_settings( 'options' );
-        // Append new icons
-        $new_icons = array_merge(
-            array(
-                'ion-android-arrow-dropdown'  => 'Ion Dropdown',
-                'ion-android-arrow-dropright' => 'Ion Dropright',
-                'ion-android-arrow-forward'   => 'Ion Forward',
-                'ion-chevron-right'           => 'Ion Right',
-                'ion-chevron-down'            => 'Ion Downr',
-                'ion-ios-arrow-down'          => 'Ion Ios Down',
-                'ion-ios-arrow-forward'       => 'Ion Ios Forward',
-                'ion-ios-arrow-thin-right'    => 'Thin Right',
-                'ion-navicon'                 => 'Ion Navicon',
-                'ion-navicon-round'           => 'Navicon Round',
-                'ion-android-menu'            => 'Menu',
-                'ion-ios-search'              => 'Search',
-                'ion-ios-search-strong'       => 'Search Strong',
-            ),
-            $icons
-        );
-        // Then we set a new list of icons as the options of the icon control
-        $controls_registry->get_control( 'icon' )->set_settings( 'options', $new_icons );
-    }
+	/**
+	 * Add icon for elementor
+	 *
+	 * @param string $controls_registry type.
+	 */
+	public function modify_controls( $controls_registry ) {
+		// Get existing icons.
+		$icons = $controls_registry->get_control( 'icon' )->get_settings( 'options' );
+		// Append new icons.
+		$new_icons = array_merge(
+			array(
+				'ion-android-arrow-dropdown'  => 'Ion Dropdown',
+				'ion-android-arrow-dropright' => 'Ion Dropright',
+				'ion-android-arrow-forward'   => 'Ion Forward',
+				'ion-chevron-right'           => 'Ion Right',
+				'ion-chevron-down'            => 'Ion Downr',
+				'ion-ios-arrow-down'          => 'Ion Ios Down',
+				'ion-ios-arrow-forward'       => 'Ion Ios Forward',
+				'ion-ios-arrow-thin-right'    => 'Thin Right',
+				'ion-navicon'                 => 'Ion Navicon',
+				'ion-navicon-round'           => 'Navicon Round',
+				'ion-android-menu'            => 'Menu',
+				'ion-ios-search'              => 'Search',
+				'ion-ios-search-strong'       => 'Search Strong',
+			),
+			$icons
+		);
+		// Then we set a new list of icons as the options of the icon control.
+		$controls_registry->get_control( 'icon' )->set_settings( 'options', $new_icons );
+	}
 
 	/**
 	 * Register Widgets
@@ -123,7 +132,7 @@ class Elementor {
 	 */
 	public function init_widgets() {
 		$this->autoload_widgets();
-		// Its is now safe to include Widgets files
+		// Its is now safe to include Widgets files.
 		$widget_manager = \Elementor\Plugin::instance()->widgets_manager;
 		foreach ( $this->get_widgets() as $widget ) {
 			$class_name = 'Boostify_Size_Guide\Widgets\\' . $widget;
@@ -132,32 +141,38 @@ class Elementor {
 		}
 	}
 
+	/**
+	 * Setup hook
+	 */
 	private function setup_hooks() {
 		// Register Module.
 		add_action( 'elementor/init', array( $this, 'register_abstract' ) );
 		// Register custom widget categories.
 		add_action( 'elementor/elements/categories_registered', array( $this, 'add_elementor_widget_categories' ) );
-		// Register widgets
+		// Register widgets.
 		add_action( 'elementor/widgets/widgets_registered', array( $this, 'init_widgets' ) );
-        add_action( 'elementor/controls/controls_registered', array( $this, 'modify_controls' ), 10, 1 );
+		add_action( 'elementor/controls/controls_registered', array( $this, 'modify_controls' ), 10, 1 );
 	}
 
+	/**
+	 * Register abstract
+	 */
 	public function register_abstract() {
 		require BOOSTIFY_SIZE_GUIDE_PATH . 'inc/elementor/abstract/class-base-widget.php';
 	}
 
-    /**
-     *  Plugin class constructor
-     *
-     * Register plugin action hooks and filters
-     *
-     * @since 1.2.0
-     * @access public
-     */
-    public function __construct() {
-        $this->setup_hooks();
-    }
+	/**
+	 *  Plugin class constructor
+	 *
+	 * Register plugin action hooks and filters
+	 *
+	 * @since 1.2.0
+	 * @access public
+	 */
+	public function __construct() {
+		$this->setup_hooks();
+	}
 }
-// Instantiate Boostify_Size_Guide\Elementor Class
+// Instantiate Boostify_Size_Guide\Elementor Class.
 Elementor::instance();
 

@@ -1,13 +1,21 @@
 <?php
+/**
+ * The Base Widget
+ *
+ * @package Boostify_Size_Guide
+ */
 
 namespace Boostify_Size_Guide;
 
 use Elementor\Widget_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit;
 }
 
+/**
+ * Base Widget
+ */
 abstract class Base_Widget extends Widget_Base {
 
 	/**

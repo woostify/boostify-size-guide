@@ -4,7 +4,9 @@
  *
  * @package Boostify Size Guide Builder
  */
+
 namespace Boostify_Size_Guide;
+
 /**
  * Class Template Sg Render
  */
@@ -108,9 +110,7 @@ class Template_Sg_Render {
 	}
 
 	/**
-	 * Callback to shortcode.
-	 *
-	 * @param array $atts attributes for shortcode.
+	 * Callback to shortcode
 	 */
 	protected function builder_template() {
 		$args = array(

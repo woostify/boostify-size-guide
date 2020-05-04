@@ -1,5 +1,12 @@
 <?php
+/**
+ * Class Template
+ *
+ * @package Boostify_Size_Guide
+ */
+
 namespace Boostify_Size_Guide;
+
 /**
  * Comments
  *
@@ -11,13 +18,13 @@ namespace Boostify_Size_Guide;
  */
 
 defined( 'ABSPATH' ) || exit;
+
 /**
  * Boostify Size Guide Template Class.
  */
-
 class Template {
 
-	private static $instance;
+	private static $instance; //phpcs:ignore
 
 	/**
 	 * Post ID
@@ -47,20 +54,28 @@ class Template {
 	 * Hook in methods.
 	 */
 	public function __construct() {
-        add_action( 'wp_head', array( $this, 'wp_head' ) );
+		add_action( 'wp_head', array( $this, 'wp_head' ) );
 		add_filter( 'single_template', array( $this, 'single_template' ) );
 	}
 
+	/**
+	 * Single template
+	 *
+	 * @param string $single_template type.
+	 */
 	public function single_template( $single_template ) {
 		if ( 'btfsg_builder' == get_post_type() ) { // phpcs:ignore
 			$single_template = BOOSTIFY_SIZE_GUIDE_PATH . 'templates/sg.php';
-		}        
+		}
 		return $single_template;
 	}
 
-    public function wp_head() {
-        wp_reset_postdata();
-    }
+	/**
+	 * Wp head
+	 */
+	public function wp_head() {
+		wp_reset_postdata();
+	}
 }
 
 Template::instance();

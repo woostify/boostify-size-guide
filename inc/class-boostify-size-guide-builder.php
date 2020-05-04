@@ -1,20 +1,28 @@
 <?php
+/**
+ * Class Boostify Size Guide Builder
+ *
+ * Main Plugin class
+ *
+ * @package Boostify_Size_Guide
+ */
 
 defined( 'ABSPATH' ) || exit;
 
-/**
- * Main Boostify Size Guide Builder
- *
- * @class Boostify_Size_Guide_Builder
- *
- * Written by pcd
- *
- */
 if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
+	/**
+	 * Main Boostify Size Guide Builder
+	 *
+	 * @class Boostify_Size_Guide_Builder
+	 *
+	 * Written by pcd
+	 */
 	class Boostify_Size_Guide_Builder {
+		private static $instance; //phpcs:ignore
 
-		private static $instance;
-
+		/**
+		 * Instance
+		 */
 		public static function instance() {
 			if ( ! isset( self::$instance ) ) {
 				self::$instance = new self();
@@ -31,15 +39,21 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 			$this->cpt();
 		}
 
+		/**
+		 * Includes
+		 */
 		public function includes() {
-            include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/admin/class-admin.php';
-            include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/admin/class-metabox.php';
-            include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/class-template.php';
-            include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/helper.php';
-            include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/elementor/class-elementor.php';
-            include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/elementor/class-template-sg-render.php';
+			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/admin/class-admin.php';
+			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/admin/class-metabox.php';
+			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/class-template.php';
+			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/helper.php';
+			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/elementor/class-elementor.php';
+			include_once BOOSTIFY_SIZE_GUIDE_PATH . 'inc/elementor/class-template-sg-render.php';
 		}
 
+		/**
+		 * Hook
+		 */
 		public function hooks() {
 			add_action( 'init', array( $this, 'post_types' ) );
 			add_action( 'plugins_loaded', array( $this, 'init' ) );
@@ -50,19 +64,30 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_icon' ), 99 );
 			add_action( 'admin_notices', array( $this, 'notice_plugin' ) );
 			add_action( 'admin_notices', array( $this, 'notice_theme_support' ) );
-            add_action( 'woocommerce_single_product_summary', 'bosstify_size_guide', 29 );
+			add_action( 'woocommerce_single_product_summary', 'bosstify_size_guide', 29 );
 		}
 
+		/**
+		 * Custom post type
+		 */
 		public function cpt() {
 			add_post_type_support( 'btfsg_builder', 'elementor' );
 		}
 
+		/**
+		 * Body Version
+		 *
+		 * @param string $classes type.
+		 */
 		public function body_ver( $classes ) {
 			$classes[] = 'boostify-size-guide-' . BOOSTIFY_SIZE_GUIDE_VER;
 
 			return $classes;
 		}
 
+		/**
+		 * Post types
+		 */
 		public function post_types() {
 			register_post_type(
 				'btfsg_builder',
@@ -84,22 +109,32 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 			);
 		}
 
+		/**
+		 * Init
+		 */
 		public function init() {
 			new Boostify_Size_Guide\Metabox();
 			new Boostify_Size_Guide\Template_Sg_Render();
 		}
 
-		public function test($value='') {
+		/**
+		 * Test
+		 *
+		 * @param string $value type.
+		 */
+		public function test( $value = '' ) {
 			new Boostify_Size_Guide\Theme_Support();
 		}
 
 		/**
-		 * Add icon for elementor.
+		 * Add icon for elementor
+		 *
+		 * @param string $controls_registry type.
 		 */
 		public function modify_controls( $controls_registry ) {
-			// Get existing icons
+			// Get existing icons.
 			$icons = $controls_registry->get_control( 'icon' )->get_settings( 'options' );
-			// Append new icons
+			// Append new icons.
 			$new_icons = array_merge(
 				array(
 					'ion-android-arrow-dropdown'  => 'Ion Dropdown',
@@ -118,13 +153,12 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 				),
 				$icons
 			);
-			// Then we set a new list of icons as the options of the icon control
+			// Then we set a new list of icons as the options of the icon control.
 			$controls_registry->get_control( 'icon' )->set_settings( 'options', $new_icons );
 		}
 
 		/**
-		 * Add ionicons.
-		 *
+		 * Add ionicons
 		 */
 		public function enqueue_icon() {
 			wp_enqueue_style(
@@ -135,10 +169,11 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 			);
 		}
 
-
+		/**
+		 * Style
+		 */
 		public function style() {
-
-			// FontAweSome 5 Free
+			// FontAweSome 5 Free.
 			wp_enqueue_style(
 				'fontawesome-5-free',
 				BOOSTIFY_SIZE_GUIDE_URL . 'assets/css/fontawesome/fontawesome.css',
@@ -146,7 +181,7 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 				BOOSTIFY_SIZE_GUIDE_VER
 			);
 
-			// Style
+			// Style.
 			wp_enqueue_style(
 				'boostify-sg-style',
 				BOOSTIFY_SIZE_GUIDE_URL . 'assets/css/style.css',
@@ -157,7 +192,6 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 
 		/**
 		 * Notice when do not install or active Elementor.
-		 *
 		 */
 		public function notice_plugin() {
 			if ( ! defined( 'ELEMENTOR_VERSION' ) || ! is_callable( 'Elementor\Plugin::instance' ) ) {
@@ -176,14 +210,13 @@ if ( ! class_exists( 'Boostify_Size_Guide_Builder' ) ) {
 		}
 
 		/**
-		 * Notice when do not theme Support.
-		 *
+		 * Notice when do not theme Support
 		 */
 		public function notice_theme_support() {
 			if ( ! current_theme_supports( 'boostify-size-guide' ) ) {
 				?>
 				<div class="notice notice-error">
-					<p><?php echo esc_html__( 'Your current theme is not supported Boostify Size Guide Plugin', 'boostify' ) ?></p>
+					<p><?php echo esc_html__( 'Your current theme is not supported Boostify Size Guide Plugin', 'boostify' ); ?></p>
 				</div>
 				<?php
 			}
