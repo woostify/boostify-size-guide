@@ -11,7 +11,9 @@
 		categoryInput = $( '.product-category-data' );
 
 	// Get defalt value.
-	category.val( categoryInput.val().split( ',' ) );
+	if ( categoryInput.val() ) {
+		category.val( categoryInput.val().split( ',' ) );
+	}
 
 	// Select 2 init.
 	category.select2(
@@ -35,7 +37,9 @@
 		productInput = $( '.product-data' );
 
 	// Get defalt value.
-	product.val( productInput.val().split( ',' ) );
+	if ( productInput.val() ) {
+		product.val( productInput.val().split( ',' ) );
+	}
 
 	// Select 2 init.
 	product.select2(
