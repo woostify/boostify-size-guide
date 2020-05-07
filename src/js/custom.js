@@ -7,7 +7,7 @@
 'use strict';
 
 (function ($) {
-	var category      = $( '.display-on' ),
+	var category      = $( '.display-on-sg' ),
 		categoryInput = $( '.product-category-data' );
 
 	// Get defalt value.

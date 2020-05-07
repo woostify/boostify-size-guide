@@ -158,7 +158,7 @@ class Metabox {
 					<div class="parent-item">
 						<label><?php echo esc_html__( 'Product Category', 'boostify' ); ?></label>
 
-						<select class="display-on" multiple="multiple">
+						<select class="display-on-sg" multiple="multiple">
 							<?php
 								$args = array(
 									'hide_empty' => true,
